@@ -77,6 +77,31 @@ body {
   gap: 0.75rem;
 }
 
+.site-back-link {
+  flex: 1 0 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(194, 65, 12, 0.18);
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #fff7ed;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  box-shadow: 0 12px 32px rgba(234, 88, 12, 0.22);
+  transition: transform 0.2s var(--transition-smooth), box-shadow 0.2s var(--transition-smooth);
+}
+
+.site-back-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgba(234, 88, 12, 0.28);
+}
+
 .brand {
   font-family: var(--font-display);
   font-weight: 700;
@@ -156,6 +181,25 @@ body {
 .page-connections .nav-links a,
 .page-second .nav-links a {
   color: #d6d3d1;
+}
+
+.page-brain .site-back-link,
+.page-connections .site-back-link,
+.page-second .site-back-link {
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #fff7ed;
+}
+
+.page-brain .site-back-link {
+  background: linear-gradient(135deg, #dc2626, #f97316);
+}
+
+.page-second .site-back-link {
+  background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #f97316);
+}
+
+.page-connections .site-back-link {
+  background: linear-gradient(135deg, #4f46e5, #a855f7, #22d3ee);
 }
 
 .page-brain .nav-links a:hover,

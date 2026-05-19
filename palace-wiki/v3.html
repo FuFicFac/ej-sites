@@ -9,6 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#03030a;--fg:#e8e8f0;--brd:#1a1a28;--cy:#7c3aed;--ci:#2563eb;--cig:#059669;--cq:#3b82f6;--ch:#d97706;--cl:#dc2626;--cw:#d97706;--cm:#a855f7;--cc:#0891b2;}
 html,body{height:100%;background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden;}
+.site-back-link{display:inline-flex;align-items:center;justify-content:center;margin:0 auto 24px;padding:12px 18px;border-radius:999px;border:1px solid rgba(148,163,184,.28);background:linear-gradient(135deg,#38bdf8,#8b5cf6);color:#eff6ff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 16px 36px rgba(56,189,248,.18);}
 #pc{position:fixed;inset:0;z-index:0;pointer-events:none;}
 #fsvg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;}
 #app{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:32px 40px 100px;}
@@ -97,6 +98,7 @@ html,body{height:100%;background:var(--bg);color:var(--fg);font-family:'Space Gr
 </style>
 </head>
 <body>
+<a class="site-back-link" href="https://fuficfac.github.io/ej-sites/">← Back to EJ's Demo Sites</a>
 <canvas id="pc"></canvas>
 <div id="app">
   <svg id="fsvg"></svg>
