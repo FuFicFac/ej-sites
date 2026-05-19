@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Why HARVEST Matters</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-harvest">
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Second Brain Demo</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="brain.html">My Brain</a></li>
+          <li><a href="normal-brain.html">Normal Brain</a></li>
+          <li><a href="second-brain.html">Second Brain</a></li>
+          <li><a class="is-active" href="harvest.html">HARVEST</a></li>
+          <li><a href="connections.html">Connections</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">Page 4</p>
+        <h1>Why HARVEST Matters</h1>
+        <p class="hero-lede">
+          HARVEST is the difference between a pile of files and a system that keeps learning after the session ends.
+        </p>
+      </section>
+
+      <section class="harvest-layout">
+        <div>
+          <ol class="step-list" id="harvest-step-list">
+            <li class="is-lit">
+              <strong>You work with an agent</strong>
+              <span>Ideas, tasks, decisions, drafts, corrections, and loose threads pile up in a live session.</span>
+            </li>
+            <li>
+              <strong>HARVEST runs on a schedule</strong>
+              <span>A cron trigger wakes up the system after you stop working.</span>
+            </li>
+            <li>
+              <strong>It reads sessions and identifies change</strong>
+              <span>What got decided? What moved? What should become durable context?</span>
+            </li>
+            <li>
+              <strong>Wiki pages get created or updated</strong>
+              <span>Fresh knowledge stops living only inside a transcript.</span>
+            </li>
+            <li>
+              <strong>Connections form</strong>
+              <span>New pages get linked back to existing people, projects, tools, and routines.</span>
+            </li>
+            <li>
+              <strong>Next session starts smarter</strong>
+              <span>The next model arrives pre-briefed instead of re-learning everything from scratch.</span>
+            </li>
+          </ol>
+          <div class="control-bar">
+            <button class="btn btn-harvest" id="harvest-cycle-button" type="button">Advance HARVEST</button>
+            <span class="pill-note" id="harvest-note">Current step: raw work is entering the system.</span>
+          </div>
+        </div>
+
+        <div class="harvest-diagram">
+          <svg viewBox="0 0 620 620" role="img" aria-labelledby="harvest-diagram-title">
+            <title id="harvest-diagram-title">Circular HARVEST workflow diagram</title>
+            <defs>
+              <linearGradient id="harvestArc" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7c3aed" />
+                <stop offset="100%" stop-color="#06b6d4" />
+              </linearGradient>
+            </defs>
+            <path class="flow-arc is-active" id="arc-0" d="M310 92 A218 218 0 0 1 490 170" fill="none" stroke="url(#harvestArc)" stroke-width="3" />
+            <path class="flow-arc" id="arc-1" d="M490 170 A218 218 0 0 1 528 360" fill="none" stroke="#334155" stroke-width="3" />
+            <path class="flow-arc" id="arc-2" d="M528 360 A218 218 0 0 1 430 514" fill="none" stroke="#334155" stroke-width="3" />
+            <path class="flow-arc" id="arc-3" d="M430 514 A218 218 0 0 1 190 514" fill="none" stroke="#334155" stroke-width="3" />
+            <path class="flow-arc" id="arc-4" d="M190 514 A218 218 0 0 1 92 360" fill="none" stroke="#334155" stroke-width="3" />
+            <path class="flow-arc" id="arc-5" d="M92 360 A218 218 0 0 1 130 170" fill="none" stroke="#334155" stroke-width="3" />
+            <path class="flow-arc" id="arc-6" d="M130 170 A218 218 0 0 1 310 92" fill="none" stroke="#334155" stroke-width="3" />
+
+            <g class="flow-node is-active" id="node-0">
+              <circle cx="310" cy="92" r="48" fill="#1e293b" stroke="#a78bfa" />
+              <text x="310" y="88" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Work</text>
+              <text x="310" y="110" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">raw session</text>
+            </g>
+            <g class="flow-node" id="node-1">
+              <circle cx="490" cy="170" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="490" y="88" text-anchor="middle" fill="#000000" font-size="0">.</text>
+              <text x="490" y="168" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Cron</text>
+              <text x="490" y="190" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">HARVEST</text>
+            </g>
+            <g class="flow-node" id="node-2">
+              <circle cx="528" cy="360" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="528" y="356" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Read</text>
+              <text x="528" y="378" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">changes</text>
+            </g>
+            <g class="flow-node" id="node-3">
+              <circle cx="430" cy="514" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="430" y="510" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Wiki</text>
+              <text x="430" y="532" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">updates</text>
+            </g>
+            <g class="flow-node" id="node-4">
+              <circle cx="190" cy="514" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="190" y="510" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Links</text>
+              <text x="190" y="532" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">formed</text>
+            </g>
+            <g class="flow-node" id="node-5">
+              <circle cx="92" cy="360" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="92" y="356" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Context</text>
+              <text x="92" y="378" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">ready</text>
+            </g>
+            <g class="flow-node" id="node-6">
+              <circle cx="130" cy="170" r="48" fill="#1e293b" stroke="#06b6d4" />
+              <text x="130" y="166" text-anchor="middle" fill="#f8fafc" font-size="16" font-family="Plus Jakarta Sans">Better</text>
+              <text x="130" y="188" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="Plus Jakarta Sans">next work</text>
+            </g>
+            <text x="310" y="316" text-anchor="middle" fill="#e9d5ff" font-size="28" font-family="Fraunces">Work → Harvest → Wiki → Context</text>
+            <text x="310" y="352" text-anchor="middle" fill="#94a3b8" font-size="20" font-family="Plus Jakarta Sans">A loop, not a filing cabinet</text>
+          </svg>
+          <p class="scroll-hint">Click the button or scroll the steps to animate the loop.</p>
+        </div>
+      </section>
+
+      <section class="closing">
+        Without HARVEST, your Second Brain is just a file cabinet. WITH HARVEST, it&apos;s a living system that learns while you sleep.
+      </section>
+    </main>
+    <script src="interactions.js"></script>
+  </body>
+  </html>

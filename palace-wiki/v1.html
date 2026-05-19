@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EJ Palace Wiki / MemPalace — Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0f14;
+    font-family: 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    color: #e8eaf0;
+    min-height: 100vh;
+    padding: 48px 32px;
+  }
+
+  .diagram-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── Title ── */
+  .title-block {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .title-block h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #f0f2f8;
+  }
+  .title-block .subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tagline {
+    margin-top: 14px;
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 999px;
+    border: 1px solid #334155;
+    font-size: 13px;
+    color: #94a3b8;
+    background: #141720;
+  }
+  .tagline strong { color: #e2e8f0; }
+
+  /* ── Shared card/box styles ── */
+  .box {
+    border-radius: 12px;
+    padding: 14px 18px;
+    border: 1px solid transparent;
+  }
+  .box-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+  .box-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .box-sub {
+    font-size: 11.5px;
+    opacity: 0.65;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* ── Color themes ── */
+  .theme-user {
+    background: #1a1230;
+    border-color: #6d28d9;
+  }
+  .theme-user .box-title { color: #a78bfa; }
+  .theme-user .box-label { color: #ddd6fe; }
+
+  .theme-inbox {
+    background: #0f1a2e;
+    border-color: #1d4ed8;
+  }
+  .theme-inbox .box-title { color: #60a5fa; }
+  .theme-inbox .box-label { color: #bfdbfe; }
+
+  .theme-ops {
+    background: #0f1f1a;
+    border-color: #059669;
+  }
+  .theme-ops .box-title { color: #34d399; }
+  .theme-ops .box-label { color: #a7f3d0; }
+
+  .theme-wiki {
+    background: #1a1608;
+    border-color: #d97706;
+  }
+  .theme-wiki .box-title { color: #fbbf24; }
+  .theme-wiki .box-label { color: #fde68a; }
+
+  .theme-mem {
+    background: #120f1d;
+    border-color: #7c3aed;
+  }
+  .theme-mem .box-title { color: #c084fc; }
+  .theme-mem .box-label { color: #e9d5ff; }
+
+  .theme-consumer {
+    background: #0e1a1a;
+    border-color: #0e7490;
+  }
+  .theme-consumer .box-title { color: #22d3ee; }
+  .theme-consumer .box-label { color: #a5f3fc; }
+
+  .theme-raw {
+    background: #0f1520;
+    border-color: #1e40af;
+  }
+  .theme-raw .box-title { color: #93c5fd; }
+  .theme-raw .box-label { color: #bfdbfe; }
+
+  /* ── Layout rows ── */
+  .row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  /* ── Arrow connectors ── */
+  .arrow-down {
+    display: flex;
+    justify-content: center;
+    height: 36px;
+    align-items: center;
+  }
+  .arrow-down svg { opacity: 0.5; }
+
+  .arrow-split {
+    display: flex;
+    justify-content: center;
+    height: 44px;
+    align-items: center;
+    position: relative;
+  }
+
+  /* ── Section wrappers ── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  /* ── User node ── */
+  .user-node {
+    width: 220px;
+    text-align: center;
+  }
+  .user-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(109,40,217,0.4);
+  }
+
+  /* ── Ops row ── */
+  .ops-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+  .op-box {
+    border-radius: 10px;
+    padding: 14px 14px 12px;
+    border: 1px solid #1a2a20;
+    background: #0b1510;
+  }
+  .op-verb {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .op-ingest .op-verb { color: #34d399; }
+  .op-query .op-verb  { color: #60a5fa; }
+  .op-harvest .op-verb { color: #f59e0b; }
+  .op-lint .op-verb   { color: #f87171; }
+
+  .op-ingest { border-color: #065f46; background: #071510; }
+  .op-query  { border-color: #1e3a5f; background: #071218; }
+  .op-harvest { border-color: #78350f; background: #130d05; }
+  .op-lint   { border-color: #7f1d1d; background: #130808; }
+
+  .op-step {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.6;
+  }
+  .op-step span {
+    display: block;
+    padding: 2px 0;
+  }
+  .op-step .arrow { color: #334155; margin-right: 4px; }
+
+  /* ── Two-layer core ── */
+  .core-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    width: 100%;
+    align-items: stretch;
+  }
+  .core-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .divider-line {
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #334155 20%, #334155 80%, transparent);
+  }
+
+  .wiki-panel {
+    border-radius: 14px;
+    border: 1px solid #d97706;
+    background: #100e04;
+    padding: 20px;
+    min-height: 280px;
+  }
+  .mem-panel {
+    border-radius: 14px;
+    border: 1px solid #7c3aed;
+    background: #0c0a14;
+    padding: 20px;
+    min-height: 280px;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .panel-badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .wiki-badge { background: rgba(217,119,6,0.2); color: #fbbf24; border: 1px solid #92400e; }
+  .mem-badge { background: rgba(124,58,237,0.2); color: #c084fc; border: 1px solid #4c1d95; }
+
+  .panel-pct {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: auto;
+    opacity: 0.3;
+  }
+  .wiki-panel .panel-pct { color: #d97706; }
+  .mem-panel .panel-pct { color: #7c3aed; }
+
+  .panel-desc {
+    font-size: 11.5px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .panel-desc strong { color: #9ca3af; }
+
+  /* folder tree */
+  .folder-tree {
+    font-size: 11.5px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    line-height: 1.8;
+    color: #4b5563;
+  }
+  .folder-tree .file-name { color: #6b7280; }
+  .folder-tree .file-special { color: #d97706; opacity: 0.8; }
+  .folder-tree .dir-name { color: #92400e; }
+  .dir-name.wiki-dir { color: #b45309; }
+
+  .mem-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .mem-tag {
+    font-size: 10.5px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid #3b0764;
+    color: #a78bfa;
+  }
+
+  /* ── Consumers row ── */
+  .consumers-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .consumer-pill {
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: #0e1a1a;
+    border: 1px solid #164e63;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7dd3fc;
+    white-space: nowrap;
+  }
+
+  /* ── Inline arrows / flow lines ── */
+  .flow-arrows {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: relative;
+    height: 40px;
+    align-items: center;
+  }
+  .flow-arrows::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(to right, #1d4ed8 0%, #7c3aed 50%, #0e7490 100%);
+    opacity: 0.4;
+  }
+  .flow-arrow-label {
+    background: #0d0f14;
+    padding: 2px 10px;
+    font-size: 10px;
+    color: #4b5563;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    position: relative;
+  }
+
+  /* ── Section dividers ── */
+  .section-sep {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #1e293b 20%, #1e293b 80%, transparent);
+    margin: 28px 0;
+  }
+
+  /* ── Two-column bottom ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  /* ── Inbox + Raw sources column ── */
+  .inbox-raw-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .inbox-box {
+    border-radius: 12px;
+    border: 1px solid #1e40af;
+    background: #080e1c;
+    padding: 16px 18px;
+  }
+  .inbox-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .inbox-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 8px rgba(59,130,246,0.6);
+  }
+  .inbox-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #93c5fd;
+    letter-spacing: 0.5px;
+  }
+  .inbox-desc {
+    font-size: 11px;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+
+  /* ── Glow effect on section headers ── */
+  .section-glow {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 12px;
+    padding: 6px 0;
+    border-radius: 4px;
+  }
+  .glow-user { color: #7c3aed; }
+  .glow-ops  { color: #059669; }
+  .glow-core { color: #d97706; }
+  .glow-out  { color: #0891b2; }
+
+  /* ── Key for Ops verbs ── */
+  .ops-section-wrap {
+    border: 1px solid #1a2a20;
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    background: #070d0a;
+  }
+
+  /* ── Main layout ── */
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .spacer { height: 20px; }
+  .spacer-sm { height: 12px; }
+
+  /* Arrow SVG */
+  .arr { display: block; margin: 0 auto; }
+
+  /* ── Top input strip ── */
+  .input-strip {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .input-chip {
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(109,40,217,0.15);
+    border: 1px solid #3b0764;
+    font-size: 11.5px;
+    color: #c084fc;
+  }
+
+  /* ── Side labels ── */
+  .side-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #1f2937;
+    margin-right: 6px;
+    align-self: center;
+  }
+
+  .labeled-row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* footer */
+  .diagram-footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 11px;
+    color: #374151;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="diagram-wrap">
+
+  <!-- Title -->
+  <div class="title-block">
+    <h1>EJ Palace Wiki / MemPalace</h1>
+    <div class="subtitle">Personal Knowledge Architecture</div>
+    <div class="tagline">
+      <strong>Wiki = curated 5%.</strong>&nbsp;&nbsp;MemPalace = searchable 100%.
+    </div>
+  </div>
+
+  <div class="main-layout">
+
+    <!-- ═══════════════════════════════════════════
+         ROW 1: YOU
+    ════════════════════════════════════════════ -->
+    <div class="section-glow glow-user">You</div>
+
+    <div class="row" style="justify-content:center;">
+      <div class="box theme-user" style="width:420px; text-align:center; padding: 18px 24px;">
+        <div style="font-size:32px; margin-bottom:8px;">🧠</div>
+        <div class="box-label" style="font-size:16px; font-weight:700;">You</div>
+        <div class="box-sub" style="margin-top:8px;">
+          Questions &nbsp;·&nbsp; Files &nbsp;·&nbsp; Sessions &nbsp;·&nbsp; Decisions &nbsp;·&nbsp; Notes
+        </div>
+        <div class="input-strip" style="margin-top:12px;">
+          <span class="input-chip">drop a file</span>
+          <span class="input-chip">ask a question</span>
+          <span class="input-chip">end a session</span>
+          <span class="input-chip">make a decision</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- arrow down -->
+    <div class="arrow-down">
+      <svg class="arr" width="2" height="32" viewBox="0 0 2 32"><line x1="1" y1="0" x2="1" y2="28" stroke="#334155" stroke-width="1.5"/><polygon points="1,32 -3,22 5,22" fill="#334155"/></svg>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         ROW 2: INBOX
+    ════════════════════════════════════════════ -->
+    <div class="row" style="justify-content:center;">
+      <div style="width:420px;">
+        <div class="inbox-box">
+          <div class="inbox-header">
+            <div class="inbox-dot"></div>
+            <div class="inbox-title">Inbox/</div>
+            <span style="font-size:10px; color:#1d4ed8; margin-left:auto; letter-spacing:1px;">DROP ZONE</span>
+          </div>
+          <div class="inbox-desc">
+            New sources arrive here before processing.<br>
+            LLM picks them up and decides: does this update a durable entity, create a wiki page, or go straight to Raw Sources?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- arrow down -->
+    <div class="arrow-down">
+      <svg class="arr" width="2" height="32" viewBox="0 0 2 32"><line x1="1" y1="0" x2="1" y2="28" stroke="#334155" stroke-width="1.5"/><polygon points="1,32 -3,22 5,22" fill="#334155"/></svg>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         ROW 3: OPERATIONS
+    ════════════════════════════════════════════ -->
+    <div class="section-glow glow-ops">Operations</div>
+
+    <div class="ops-section-wrap">
+      <div class="ops-grid">
+
+        <!-- INGEST -->
+        <div class="op-box op-ingest">
+          <div class="op-verb">Ingest</div>
+          <div class="op-step">
+            <span><span class="arrow">→</span>New source arrives</span>
+            <span><span class="arrow">→</span>LLM reads it</span>
+            <span><span class="arrow">→</span>Updates durable entity?</span>
+            <span><span class="arrow">→</span>Wiki pages updated</span>
+            <span><span class="arrow">→</span>Source → Raw Sources</span>
+            <span><span class="arrow">→</span>MemPalace indexes it</span>
+          </div>
+        </div>
+
+        <!-- QUERY -->
+        <div class="op-box op-query">
+          <div class="op-verb">Query</div>
+          <div class="op-step">
+            <span><span class="arrow">→</span>User asks a question</span>
+            <span><span class="arrow">→</span>LLM reads index.md</span>
+            <span><span class="arrow">→</span>Reads relevant pages</span>
+            <span><span class="arrow">→</span>Searches MemPalace</span>
+            <span><span class="arrow">→</span>Synthesizes answer</span>
+            <span><span class="arrow">→</span>Files evergreen facts back</span>
+          </div>
+        </div>
+
+        <!-- HARVEST -->
+        <div class="op-box op-harvest">
+          <div class="op-verb">Harvest</div>
+          <div class="op-step">
+            <span><span class="arrow">→</span>Scheduled job runs</span>
+            <span><span class="arrow">→</span>Mines agent sessions</span>
+            <span><span class="arrow">→</span>Extracts wiki-worthy facts</span>
+            <span><span class="arrow">→</span>Promotes into shared wiki</span>
+            <span><span class="arrow">→</span>Bridges isolated agent</span>
+            <span style="padding-left: 12px; color:#78350f;">knowledge → shared wiki</span>
+          </div>
+        </div>
+
+        <!-- LINT -->
+        <div class="op-box op-lint">
+          <div class="op-verb">Lint</div>
+          <div class="op-step">
+            <span><span class="arrow">→</span>Periodic health check</span>
+            <span><span class="arrow">→</span>Orphan pages</span>
+            <span><span class="arrow">→</span>Broken links</span>
+            <span><span class="arrow">→</span>Stale pages</span>
+            <span><span class="arrow">→</span>Contradictions</span>
+            <span style="color:#7f1d1d;"><span class="arrow">⚑</span>No auto-fix w/o approval</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- arrows splitting to wiki + mem -->
+    <div style="display:flex; justify-content:center; height:48px; position:relative; margin:0;">
+      <svg width="700" height="48" viewBox="0 0 700 48">
+        <!-- center down, splits to left and right -->
+        <line x1="350" y1="0" x2="350" y2="24" stroke="#334155" stroke-width="1.5"/>
+        <line x1="350" y1="24" x2="150" y2="24" stroke="#d97706" stroke-width="1.5" opacity="0.6"/>
+        <line x1="350" y1="24" x2="550" y2="24" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
+        <line x1="150" y1="24" x2="150" y2="48" stroke="#d97706" stroke-width="1.5" opacity="0.6"/>
+        <line x1="550" y1="24" x2="550" y2="48" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
+        <polygon points="150,48 146,38 154,38" fill="#d97706" opacity="0.6"/>
+        <polygon points="550,48 546,38 554,38" fill="#7c3aed" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         ROW 4: CORE TWO-LAYER
+    ════════════════════════════════════════════ -->
+    <div class="section-glow glow-core">Core Two-Layer System</div>
+
+    <div class="core-row">
+
+      <!-- WIKI -->
+      <div class="wiki-panel">
+        <div class="panel-header">
+          <span class="panel-badge wiki-badge">Wiki</span>
+          <div style="font-size:12px; color:#92400e; font-weight:600;">Curated Knowledge</div>
+          <div class="panel-pct">~5%</div>
+        </div>
+        <div class="panel-desc">
+          <strong>LLM-maintained</strong> markdown pages. Cross-linked, human-readable synthesis. Durable entities, active projects, real people, recurring concepts, infrastructure, and decisions with reasoning.
+          <br><br>Target steady state: <strong style="color:#d97706;">200–400 active pages</strong>
+        </div>
+        <div class="folder-tree">
+          <span class="file-special">WIKI.md</span> — schema + operating manual<br>
+          <span class="file-special">index.md</span> — catalog of all pages<br>
+          <span class="file-special">log.md</span> — append-only operation log<br>
+          <br>
+          <span style="color:#374151;">Wiki/</span><br>
+          &nbsp;&nbsp;<span class="wiki-dir dir-name">Projects/</span><br>
+          &nbsp;&nbsp;<span class="wiki-dir dir-name">People/</span><br>
+          &nbsp;&nbsp;<span class="wiki-dir dir-name">Concepts/</span><br>
+          &nbsp;&nbsp;<span class="wiki-dir dir-name">Infrastructure/</span><br>
+          &nbsp;&nbsp;<span style="color:#78350f; opacity:0.7;">Archive/</span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="core-divider">
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- MEMPALACE -->
+      <div class="mem-panel">
+        <div class="panel-header">
+          <span class="panel-badge mem-badge">MemPalace</span>
+          <div style="font-size:12px; color:#4c1d95; font-weight:600;">Semantic Substrate</div>
+          <div class="panel-pct">100%</div>
+        </div>
+        <div class="panel-desc">
+          <strong>Everything, indexed.</strong> Semantic search across raw sources, session logs, notes, transcripts, and long-tail memory. Accessed through CLI or MCP. The recall layer that Wiki synthesis draws from.
+        </div>
+        <div class="mem-tags">
+          <span class="mem-tag">Raw Sources</span>
+          <span class="mem-tag">Session Logs</span>
+          <span class="mem-tag">Notes</span>
+          <span class="mem-tag">Transcripts</span>
+          <span class="mem-tag">Decisions</span>
+          <span class="mem-tag">Long-tail memory</span>
+          <span class="mem-tag">Semantic Vectors</span>
+          <span class="mem-tag">CLI + MCP access</span>
+        </div>
+        <div style="margin-top:16px; padding:10px 12px; border-radius:8px; background:rgba(124,58,237,0.08); border:1px solid #2d1b69; font-size:11px; color:#6b7280; font-family:'SF Mono','Fira Code',monospace;">
+          Raw Sources/<br>
+          &nbsp;&nbsp;<span style="color:#4c1d95; opacity:0.8;">YYYY-MM/</span> &nbsp;←&nbsp; archive of ingested files
+        </div>
+      </div>
+
+    </div>
+
+    <!-- arrows converging to consumers -->
+    <div style="display:flex; justify-content:center; height:48px; position:relative; margin:0;">
+      <svg width="700" height="48" viewBox="0 0 700 48">
+        <line x1="150" y1="0" x2="150" y2="24" stroke="#d97706" stroke-width="1.5" opacity="0.5"/>
+        <line x1="550" y1="0" x2="550" y2="24" stroke="#7c3aed" stroke-width="1.5" opacity="0.5"/>
+        <line x1="150" y1="24" x2="350" y2="24" stroke="#0891b2" stroke-width="1.5" opacity="0.5"/>
+        <line x1="550" y1="24" x2="350" y2="24" stroke="#0891b2" stroke-width="1.5" opacity="0.5"/>
+        <line x1="350" y1="24" x2="350" y2="48" stroke="#0891b2" stroke-width="1.5" opacity="0.5"/>
+        <polygon points="350,48 346,38 354,38" fill="#0891b2" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         ROW 5: CONSUMERS
+    ════════════════════════════════════════════ -->
+    <div class="section-glow glow-out">Any LLM with File Access</div>
+
+    <div style="border: 1px solid #164e63; border-radius:14px; background:#060e10; padding:18px 24px;">
+      <div style="font-size:11px; color:#1e40af; text-align:center; margin-bottom:14px; letter-spacing:1px; text-transform:uppercase; font-weight:700;">
+        Consumers — read Wiki first, search MemPalace for long-tail recall, maintain both over time
+      </div>
+      <div class="consumers-grid">
+        <div class="consumer-pill">🖥 Claude Code</div>
+        <div class="consumer-pill">⚡ Codex</div>
+        <div class="consumer-pill">🤖 Claude Desktop</div>
+        <div class="consumer-pill">🐾 OpenClaw</div>
+        <div class="consumer-pill">🪄 Cursor</div>
+        <div class="consumer-pill">🌐 ChatGPT / MCP clients</div>
+      </div>
+    </div>
+
+  </div><!-- end main layout -->
+
+  <!-- footer -->
+  <div class="diagram-footer">
+    EJ Palace Personal Knowledge Architecture &nbsp;·&nbsp; Wiki = curated 5% &nbsp;·&nbsp; MemPalace = searchable 100%
+  </div>
+
+</div><!-- end diagram-wrap -->
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Connection Map</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-connections">
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Second Brain Demo</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="brain.html">My Brain</a></li>
+          <li><a href="normal-brain.html">Normal Brain</a></li>
+          <li><a href="second-brain.html">Second Brain</a></li>
+          <li><a href="harvest.html">HARVEST</a></li>
+          <li><a class="is-active" href="connections.html">Connections</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">Page 5</p>
+        <h1>The Connection Map</h1>
+        <p class="hero-lede">
+          Click any node to reveal how the system talks to itself: identity files, memory layers, sessions, agents,
+          the diary, HARVEST, and the D Second Brain all acting like one constellation.
+        </p>
+      </section>
+
+      <section class="connections-stage">
+        <canvas id="connection-map" width="1280" height="720" aria-label="Interactive connection map"></canvas>
+      </section>
+      <section class="connection-panel" id="connection-panel" aria-live="polite">
+        <h3>Pick a node</h3>
+        <p>Start with MEMORY.md, Alice, or HARVEST cron to show how context moves through the system.</p>
+        <div class="panel-meta">Nodes include SOUL.md, MEMORY.md, diary, wiki, MemPalace, agents, sessions, and D Second Brain.</div>
+      </section>
+    </main>
+    <script src="connections.js"></script>
+  </body>
+  </html>

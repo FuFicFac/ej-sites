@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This Is a Normal Brain</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-normal">
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Second Brain Demo</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="brain.html">My Brain</a></li>
+          <li><a class="is-active" href="normal-brain.html">Normal Brain</a></li>
+          <li><a href="second-brain.html">Second Brain</a></li>
+          <li><a href="harvest.html">HARVEST</a></li>
+          <li><a href="connections.html">Connections</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">Page 2</p>
+        <h1>This Is a Normal Brain</h1>
+        <p class="hero-lede">
+          Same human worth. Different executive software. Ideas still arrive, but they enter a queue, stay visible,
+          and finish one by one.
+        </p>
+      </section>
+
+      <section class="page-section">
+        <h2>Queue, Process, Complete</h2>
+        <p>
+          The contrast is not intelligence. It is sequencing. Working memory holds the next few items steady long enough
+          for a task to survive contact with the day.
+        </p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 1100 620" role="img" aria-labelledby="normal-diagram-title">
+            <title id="normal-diagram-title">Linear executive function flow with sequential task completion</title>
+            <defs>
+              <linearGradient id="calmFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0ea5e9" />
+                <stop offset="100%" stop-color="#22c55e" />
+              </linearGradient>
+            </defs>
+            <rect x="110" y="180" width="880" height="240" rx="28" fill="rgba(255,255,255,0.8)" stroke="rgba(14,165,233,0.25)" />
+            <text x="150" y="155" fill="#0369a1" font-size="20" font-family="Plus Jakarta Sans">Working memory stays online</text>
+            <path d="M180 300 H930" fill="none" stroke="url(#calmFlow)" stroke-width="12" stroke-linecap="round" />
+
+            <g id="normal-idea-stack">
+              <rect x="170" y="245" width="145" height="62" rx="18" fill="#e0f2fe" stroke="#38bdf8" />
+              <text x="242" y="282" text-anchor="middle" fill="#0c4a6e" font-size="24" font-family="Plus Jakarta Sans">Idea 1</text>
+              <rect x="170" y="326" width="145" height="62" rx="18" fill="#ecfeff" stroke="#2dd4bf" />
+              <text x="242" y="363" text-anchor="middle" fill="#0f766e" font-size="24" font-family="Plus Jakarta Sans">Idea 2</text>
+            </g>
+
+            <g class="task-pulse" id="normal-current-task">
+              <rect x="420" y="232" width="225" height="118" rx="24" fill="#ffffff" stroke="#0ea5e9" stroke-width="3" />
+              <text x="532" y="272" text-anchor="middle" fill="#0369a1" font-size="22" font-family="Plus Jakarta Sans">Current task</text>
+              <text x="532" y="312" text-anchor="middle" fill="#0f172a" font-size="28" font-family="Plus Jakarta Sans">Draft outline</text>
+            </g>
+
+            <g id="normal-complete-column">
+              <rect x="760" y="214" width="170" height="64" rx="18" fill="#dcfce7" stroke="#22c55e" />
+              <text x="845" y="252" text-anchor="middle" fill="#166534" font-size="22" font-family="Plus Jakarta Sans">Checked off</text>
+              <circle id="normal-check-1" class="check-pop" cx="790" cy="330" r="0" fill="#22c55e" />
+              <circle id="normal-check-2" class="check-pop" cx="845" cy="330" r="0" fill="#22c55e" />
+              <circle id="normal-check-3" class="check-pop" cx="900" cy="330" r="0" fill="#22c55e" />
+              <path id="normal-checkmark-1" d="M782 330 l7 7 l13 -15" fill="none" stroke="#fff" stroke-width="4" opacity="0" />
+              <path id="normal-checkmark-2" d="M837 330 l7 7 l13 -15" fill="none" stroke="#fff" stroke-width="4" opacity="0" />
+              <path id="normal-checkmark-3" d="M892 330 l7 7 l13 -15" fill="none" stroke="#fff" stroke-width="4" opacity="0" />
+            </g>
+          </svg>
+        </div>
+        <div class="control-bar">
+          <button class="btn btn-calm" id="normal-progress-button" type="button">Advance the queue</button>
+          <span class="pill-note" id="normal-note">Current state: tasks are moving left to right in a stable order.</span>
+        </div>
+      </section>
+
+      <section class="closing">
+        Different operating system. Same human. What if we could install the missing software?
+      </section>
+    </main>
+    <script src="interactions.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EJ Palace — Wiki / MemPalace · Interactive V3</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#03030a;--fg:#e8e8f0;--brd:#1a1a28;--cy:#7c3aed;--ci:#2563eb;--cig:#059669;--cq:#3b82f6;--ch:#d97706;--cl:#dc2626;--cw:#d97706;--cm:#a855f7;--cc:#0891b2;}
+html,body{height:100%;background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden;}
+#pc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#fsvg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;}
+#app{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:32px 40px 100px;}
+.sh{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:40px;gap:20px;flex-wrap:wrap;}
+.sh h1{font-size:26px;font-weight:700;letter-spacing:-1px;color:#fff;}
+.gt{background:linear-gradient(90deg,#f59e0b,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:#252535;text-transform:uppercase;margin-top:6px;}
+.btour{padding:10px 22px;background:transparent;border:1px solid #2a2a40;border-radius:8px;color:#4b5563;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all .25s;white-space:nowrap;}
+.btour:hover,.btour.active{border-color:#7c3aed;color:#a78bfa;background:rgba(124,58,237,.1);}
+#diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;}
+.dr{display:flex;justify-content:center;align-items:stretch;gap:10px;padding:14px 0;width:100%;position:relative;}
+.node{position:relative;border-radius:14px;border:1px solid var(--brd);background:#08080f;cursor:pointer;transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,border-color .25s,opacity .35s;z-index:2;}
+.node:hover{transform:translateY(-4px) scale(1.025);}
+.node::before{content:'';position:absolute;top:-1px;left:24px;right:24px;height:2px;border-radius:1px;background:var(--nc,#1e1e30);box-shadow:0 0 8px var(--nc,transparent);transition:left .3s,right .3s,box-shadow .3s;}
+.node:hover::before{left:8px;right:8px;box-shadow:0 0 18px var(--nc,transparent);}
+.node:hover{border-color:var(--nc,var(--brd));box-shadow:0 12px 40px -10px var(--nc,transparent),0 0 0 1px rgba(255,255,255,.03);}
+.node.dimmed{opacity:.1;transform:none!important;}
+.node.thl{opacity:1!important;box-shadow:0 0 0 2px var(--nc,#7c3aed),0 0 40px -4px var(--nc,#7c3aed)!important;z-index:10;}
+#ny{--nc:var(--cy);width:260px;padding:22px 24px;text-align:center;}
+.orb{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#8b5cf6,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 12px;box-shadow:0 0 28px rgba(124,58,237,.55);animation:op 3.5s ease-in-out infinite;}
+@keyframes op{0%,100%{box-shadow:0 0 28px rgba(124,58,237,.55);}50%{box-shadow:0 0 50px rgba(124,58,237,1),0 0 100px rgba(124,58,237,.2);}}
+.nt{font-size:17px;font-weight:700;color:#fff;}
+.nst{font-size:10px;color:#686890;font-family:'Space Mono',monospace;letter-spacing:1px;margin:4px 0 10px;}
+.ychips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+.chip{padding:3px 9px;border-radius:6px;font-size:10px;font-weight:600;background:rgba(124,58,237,.14);border:1px solid rgba(124,58,237,.35);color:rgba(167,139,250,.9);font-family:'Space Mono',monospace;}
+#ni{--nc:var(--ci);width:380px;padding:16px 22px;}
+.iin{display:flex;align-items:center;gap:16px;}
+.ibl{width:10px;height:10px;border-radius:50%;background:#3b82f6;box-shadow:0 0 10px rgba(59,130,246,.9);flex-shrink:0;animation:bl 2.2s ease-in-out infinite;}
+@keyframes bl{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.65);}}
+.inm{font-size:15px;font-weight:700;color:#93c5fd;}
+.ind{font-size:11px;color:#5080c0;font-family:'Space Mono',monospace;margin-top:3px;}
+.on{flex:1;max-width:270px;min-width:160px;padding:20px 18px;}
+.onum{font-family:'Space Mono',monospace;font-size:9px;color:#585878;letter-spacing:2px;margin-bottom:8px;}
+.ov{font-size:21px;font-weight:700;letter-spacing:-.5px;margin-bottom:14px;}
+.ost{font-family:'Space Mono',monospace;font-size:11px;color:#7070a0;line-height:2.2;}
+.ost .s{color:#7070a0;}
+.cn{flex:1;max-width:560px;padding:26px 28px;}
+.cpct{font-size:68px;font-weight:700;letter-spacing:-4px;line-height:1;color:transparent;margin-bottom:10px;}
+.wpct{-webkit-text-stroke:1px rgba(217,119,6,.22);}
+.mpct{-webkit-text-stroke:1px rgba(168,85,247,.22);}
+.cttl{font-size:21px;font-weight:700;margin-bottom:4px;}
+.csub{font-size:10px;color:#6060a0;font-family:'Space Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+.cdsc{font-size:13px;color:#7070a0;line-height:1.75;}
+.wtr{margin-top:14px;font-family:'Space Mono',monospace;font-size:10px;line-height:2;color:#5a5a80;}
+.wtr .tf{color:rgba(217,119,6,.75);}.wtr .td{color:rgba(217,119,6,.5);}
+.mpls{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;}
+.mp{padding:3px 10px;border-radius:6px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3);color:rgba(168,85,247,.85);font-size:10px;font-family:'Space Mono',monospace;}
+.cgap{width:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:.12;}
+.csn{flex:1;max-width:175px;min-width:110px;padding:16px 14px;text-align:center;}
+.ci2{font-size:22px;margin-bottom:8px;}
+.cnm{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4a8a98;font-family:'Space Mono',monospace;}
+#mb{position:fixed;inset:0;background:rgba(3,3,10,.88);backdrop-filter:blur(6px);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;}
+#mb.open{opacity:1;pointer-events:all;}
+#modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.93) translateY(10px);z-index:101;width:min(680px,92vw);max-height:88vh;overflow-y:auto;background:#09090f;border-radius:22px;border:1px solid #1c1c2e;padding:36px 40px;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:#1a1a2a transparent;}
+#modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1) translateY(0);}
+#modal::-webkit-scrollbar{width:4px;}
+#modal::-webkit-scrollbar-thumb{background:#1a1a2a;border-radius:2px;}
+.mbar{height:3px;border-radius:2px;margin-bottom:26px;}
+.mico{font-size:38px;margin-bottom:12px;}
+.mttl{font-size:34px;font-weight:700;letter-spacing:-1.5px;color:#fff;margin-bottom:4px;}
+.msub{font-size:11px;font-family:'Space Mono',monospace;color:#5a5a80;letter-spacing:1px;text-transform:uppercase;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid #18182e;}
+.mdsc{font-size:15px;color:#8080a8;line-height:1.85;margin-bottom:26px;}
+.mslbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#484868;margin-bottom:12px;margin-top:4px;}
+.msteps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.mstep{display:flex;align-items:flex-start;gap:18px;padding:16px 20px;border-radius:11px;background:#08081a;border:1px solid #18182e;transition:background .2s,border-color .2s;}
+.mstep:hover{background:#0e0e22;border-color:#22223a;}
+.snum{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;min-width:26px;padding-top:2px;color:#484868;}
+.stxt{font-size:16px;color:#8888b0;line-height:1.55;}
+.stxt .hl{color:#b0b0d8;font-weight:600;}
+.mwarn{margin-top:14px;padding:14px 18px;border-radius:10px;background:rgba(220,38,38,.09);border:1px solid rgba(220,38,38,.3);font-size:13px;color:rgba(220,80,80,.85);font-family:'Space Mono',monospace;line-height:1.7;}
+.mcode{margin-top:14px;padding:14px 18px;border-radius:10px;background:#040310;border:1px solid #16083a;font-family:'Space Mono',monospace;font-size:12px;color:#7050a8;line-height:2;}
+.mcode .cmd{color:rgba(168,85,247,.85);}
+.mcls{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid #2a2a40;background:transparent;color:#5a5a78;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.mcls:hover{border-color:#5a5a78;color:#9090b8;}
+#tbar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:11px 20px;background:rgba(8,8,16,.97);border:1px solid #1a1a2a;border-radius:999px;backdrop-filter:blur(12px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;}
+#tbar.visible{opacity:1;pointer-events:all;}
+.tbtn{width:34px;height:34px;border-radius:50%;border:1px solid #1e1e30;background:transparent;color:#3a3a58;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.tbtn:hover{border-color:#7c3aed;color:#a78bfa;}
+.tdots{display:flex;gap:6px;}
+.tdot{width:6px;height:6px;border-radius:50%;background:#1a1a28;cursor:pointer;transition:all .2s;}
+.tdot.active{background:#7c3aed;box-shadow:0 0 8px rgba(124,58,237,.7);}
+.tlbl{font-family:'Space Mono',monospace;font-size:10px;color:#252535;letter-spacing:1px;}
+#kbh{position:fixed;bottom:20px;right:22px;font-family:'Space Mono',monospace;font-size:10px;color:#141420;line-height:2;text-align:right;z-index:50;}
+.kb{display:inline-block;padding:1px 5px;border:1px solid #141420;border-radius:4px;font-size:9px;margin-right:4px;}
+.sf{margin-top:36px;text-align:center;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:#131320;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<canvas id="pc"></canvas>
+<div id="app">
+  <svg id="fsvg"></svg>
+  <header class="sh">
+    <div>
+      <h1>EJ Palace &nbsp;<span class="gt">Wiki / MemPalace</span></h1>
+      <div class="stag">click any node to explore · interactive architecture · v3</div>
+    </div>
+    <button class="btour" id="btour" onclick="startTour()">▷&nbsp; WALK ME THROUGH IT</button>
+  </header>
+  <main id="diagram">
+    <div class="dr">
+      <div class="node" id="ny" onclick="openModal('you')">
+        <div class="orb">🧠</div>
+        <div class="nt">You</div>
+        <div class="nst">THE SOURCE</div>
+        <div class="ychips">
+          <span class="chip">questions</span><span class="chip">files</span>
+          <span class="chip">sessions</span><span class="chip">decisions</span>
+        </div>
+      </div>
+    </div>
+    <div class="dr">
+      <div class="node" id="ni" onclick="openModal('inbox')">
+        <div class="iin">
+          <div class="ibl"></div>
+          <div><div class="inm">Inbox/</div><div class="ind">drop zone · LLM decides what to do with each source</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="dr" style="max-width:1100px;margin:0 auto;">
+      <div class="node on" id="nig" style="--nc:#059669" onclick="openModal('ingest')">
+        <div class="onum">01</div><div class="ov" style="color:#059669">INGEST</div>
+        <div class="ost"><div class="s">source arrives</div><div class="s">LLM evaluates</div><div class="s">wiki updated</div><div class="s">MemPalace indexes</div></div>
+      </div>
+      <div class="node on" id="nq" style="--nc:#3b82f6" onclick="openModal('query')">
+        <div class="onum">02</div><div class="ov" style="color:#3b82f6">QUERY</div>
+        <div class="ost"><div class="s">question arrives</div><div class="s">reads index.md</div><div class="s">searches MemPalace</div><div class="s">synthesizes answer</div></div>
+      </div>
+      <div class="node on" id="nh" style="--nc:#d97706" onclick="openModal('harvest')">
+        <div class="onum">03</div><div class="ov" style="color:#d97706">HARVEST</div>
+        <div class="ost"><div class="s">scheduled nightly</div><div class="s">mines agent sessions</div><div class="s">promotes wiki facts</div><div class="s">bridges agents→wiki</div></div>
+      </div>
+      <div class="node on" id="nl" style="--nc:#dc2626" onclick="openModal('lint')">
+        <div class="onum">04</div><div class="ov" style="color:#dc2626">LINT</div>
+        <div class="ost"><div class="s">orphan pages</div><div class="s">broken links</div><div class="s">contradictions</div><div class="s">⚑ no auto-fix</div></div>
+      </div>
+    </div>
+    <div class="dr" style="max-width:1100px;margin:0 auto;">
+      <div class="node cn" id="nw" style="--nc:#d97706" onclick="openModal('wiki')">
+        <div class="cpct wpct">~5%</div>
+        <div class="cttl" style="color:#d97706">Wiki</div>
+        <div class="csub">CURATED · CROSS-LINKED · LLM-MAINTAINED</div>
+        <div class="cdsc">Durable entities, active projects, real people, recurring concepts, decisions with reasoning. Target: 200–400 active pages.</div>
+        <div class="wtr"><span class="tf">WIKI.md</span>&nbsp;schema + manual<br><span class="tf">index.md</span>&nbsp;catalog<br><span class="tf">log.md</span>&nbsp;&nbsp;op log<br><span class="td">Projects/ People/ Concepts/ Infrastructure/</span></div>
+      </div>
+      <div class="cgap">⚡</div>
+      <div class="node cn" id="nm" style="--nc:#a855f7" onclick="openModal('mem')">
+        <div class="cpct mpct">100%</div>
+        <div class="cttl" style="color:#a855f7">MemPalace</div>
+        <div class="csub">SEMANTIC SEARCH · EVERYTHING INDEXED</div>
+        <div class="cdsc">Raw sources, session logs, notes, transcripts, long-tail memory. The recall substrate beneath the wiki. CLI + MCP access.</div>
+        <div class="mpls"><span class="mp">raw_sources</span><span class="mp">session_logs</span><span class="mp">notes</span><span class="mp">transcripts</span><span class="mp">vectors</span><span class="mp">CLI·MCP</span></div>
+      </div>
+    </div>
+    <div class="dr" style="max-width:1100px;margin:0 auto;flex-wrap:wrap;">
+      <div class="node csn" id="ncc" style="--nc:#0891b2" onclick="openModal('claude-code')"><div class="ci2">🖥</div><div class="cnm">Claude Code</div></div>
+      <div class="node csn" id="ncx" style="--nc:#0891b2" onclick="openModal('codex')"><div class="ci2">⚡</div><div class="cnm">Codex</div></div>
+      <div class="node csn" id="ncd" style="--nc:#0891b2" onclick="openModal('claude-desktop')"><div class="ci2">🤖</div><div class="cnm">Claude Desktop</div></div>
+      <div class="node csn" id="noc" style="--nc:#0891b2" onclick="openModal('openclaw')"><div class="ci2">🐾</div><div class="cnm">OpenClaw</div></div>
+      <div class="node csn" id="ncr" style="--nc:#0891b2" onclick="openModal('cursor')"><div class="ci2">🪄</div><div class="cnm">Cursor</div></div>
+      <div class="node csn" id="nmp" style="--nc:#0891b2" onclick="openModal('mcp')"><div class="ci2">🌐</div><div class="cnm">MCP Clients</div></div>
+    </div>
+  </main>
+  <footer class="sf">Wiki = curated 5% &nbsp;·&nbsp; MemPalace = searchable 100% &nbsp;·&nbsp; EJ Palace Personal Knowledge Architecture</footer>
+</div>
+
+<div id="mb" onclick="closeModal()"></div>
+<div id="modal">
+  <button class="mcls" onclick="closeModal()">✕</button>
+  <div class="mbar" id="mbar"></div>
+  <div id="mico" class="mico"></div>
+  <div id="mttl" class="mttl"></div>
+  <div id="msub" class="msub"></div>
+  <div id="mbdy"></div>
+</div>
+
+<div id="tbar">
+  <button class="tbtn" onclick="tourPrev()">←</button>
+  <div class="tdots" id="tdots"></div>
+  <div class="tlbl" id="tlbl">1 / 9</div>
+  <button class="tbtn" onclick="tourNext()">→</button>
+  <button class="tbtn" onclick="endTour()">✕</button>
+</div>
+
+<div id="kbh">
+  <div><span class="kb">ESC</span>close / exit</div>
+  <div><span class="kb">← →</span>tour nav</div>
+  <div><span class="kb">P</span>start tour</div>
+</div>
+
+<script>
+// PARTICLES
+(function(){
+  const c=document.getElementById('pc'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<140;i++)pts.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0002,vy:(Math.random()-.5)*.0002,r:Math.random()*1.1+.3,a:Math.random()*.18+.03});
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{p.x=(p.x+p.vx+1)%1;p.y=(p.y+p.vy+1)%1;ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${p.a})`;ctx.fill();});
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// SVG CONNECTIONS
+const CONNS=[
+  {f:'ny',  t:'ni',  c:'#7c3aed',sp:2.0},
+  {f:'ni',  t:'nig', c:'#2563eb',sp:2.4},
+  {f:'ni',  t:'nq',  c:'#2563eb',sp:2.1},
+  {f:'ni',  t:'nh',  c:'#2563eb',sp:2.7},
+  {f:'ni',  t:'nl',  c:'#2563eb',sp:2.3},
+  {f:'nig', t:'nw',  c:'#059669',sp:1.9},
+  {f:'nq',  t:'nw',  c:'#3b82f6',sp:2.2},
+  {f:'nh',  t:'nm',  c:'#d97706',sp:2.5},
+  {f:'nl',  t:'nm',  c:'#dc2626',sp:2.0},
+  {f:'nw',  t:'ncc', c:'#d97706',sp:3.0},
+  {f:'nm',  t:'nmp', c:'#a855f7',sp:2.8},
+];
+function ctr(el){
+  const svg=document.getElementById('fsvg');
+  const sr=svg.getBoundingClientRect(),r=el.getBoundingClientRect();
+  return{x:r.left+r.width/2-sr.left,y:r.top+r.height/2-sr.top,t:r.top-sr.top,b:r.bottom-sr.top};
+}
+function drawConns(){
+  const svg=document.getElementById('fsvg');
+  svg.innerHTML='';
+  svg.setAttribute('style','position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;');
+  CONNS.forEach((conn,i)=>{
+    const fe=document.getElementById(conn.f),te=document.getElementById(conn.t);
+    if(!fe||!te)return;
+    const f=ctr(fe),t=ctr(te);
+    const my=(f.b+t.t)/2;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${f.x},${f.b} C${f.x},${my} ${t.x},${my} ${t.x},${t.t}`);
+    path.setAttribute('stroke',conn.c);path.setAttribute('stroke-width','1.5');
+    path.setAttribute('fill','none');path.setAttribute('stroke-dasharray','5 4');path.setAttribute('opacity','0.18');
+    const a=document.createElementNS('http://www.w3.org/2000/svg','animate');
+    a.setAttribute('attributeName','stroke-dashoffset');a.setAttribute('from','0');a.setAttribute('to','-90');
+    a.setAttribute('dur',`${conn.sp}s`);a.setAttribute('repeatCount','indefinite');
+    path.appendChild(a);svg.appendChild(path);
+  });
+}
+window.addEventListener('load',()=>setTimeout(drawConns,120));
+window.addEventListener('resize',()=>setTimeout(drawConns,120));
+
+// MODAL DATA
+function S(n,t){return`<div class="mstep"><div class="snum">${n}</div><div class="stxt">${t}</div></div>`;}
+function SEC(l,arr){return`<div class="mslbl">${l}</div><div class="msteps">${arr.join('')}</div><div style="height:16px"></div>`;}
+const DATA={
+  you:{icon:'🧠',title:'You',sub:'The Source · Everything Starts Here',color:'#7c3aed',
+    desc:'Every piece of knowledge in this system originates with you — questions you ask, files you drop, sessions that end, decisions you make. You\'re the only human in the loop.',
+    body:SEC('What You Contribute',[S('→','<span class="hl">Questions</span> trigger QUERY operations — any LLM interface works'),S('→','<span class="hl">Files</span> drop into Inbox/ and get processed by INGEST'),S('→','<span class="hl">Sessions</span> with AI agents get mined nightly by HARVEST'),S('→','<span class="hl">Decisions</span> get captured with their reasoning in the Wiki'),S('→','<span class="hl">Notes & drafts</span> flow to MemPalace for long-tail recall')])},
+  inbox:{icon:'📥',title:'Inbox/',sub:'Drop Zone · First Decision Point',color:'#2563eb',
+    desc:'Nothing bypasses the inbox. Every new source — a file, transcript, document, link — lands here first. The LLM picks each one up and makes a routing decision before anything touches the permanent layers.',
+    body:SEC('The LLM Decision Tree',[S('1','File lands in <span class="hl">Inbox/</span>'),S('2','LLM reads the full content and evaluates it'),S('3','<span class="hl">Updates a durable entity?</span> → edit existing wiki page'),S('4','<span class="hl">Wiki-worthy standalone?</span> → create new page'),S('5','Source archived to <span class="hl">Raw Sources/YYYY-MM/</span>'),S('6','MemPalace <span class="hl">indexes semantically</span>')])},
+  ingest:{icon:'⬇',title:'INGEST',sub:'Operation 01 · Triggered by New Sources',color:'#059669',
+    desc:'The pipeline that turns raw information into knowledge. Every file that enters the system goes through INGEST — the first transformation step that distributes a source across both layers.',
+    body:SEC('Full Flow',[S('01','New source arrives in <span class="hl">Inbox/</span>'),S('02','LLM reads the complete content'),S('03','Evaluates: does this update a <span class="hl">durable entity</span>?'),S('04','Wiki pages created or updated as needed'),S('05','Source archived to <span class="hl">Raw Sources/YYYY-MM/</span>'),S('06','MemPalace indexes the file <span class="hl">semantically</span>'),S('✓','Source is now findable AND synthesized')])},
+  query:{icon:'🔍',title:'QUERY',sub:'Operation 02 · Triggered by Questions',color:'#3b82f6',
+    desc:'The read path. When you or any LLM asks a question, QUERY orchestrates a layered lookup — starting with curated wiki synthesis, then reaching into MemPalace for long-tail recall. The best answers get filed back.',
+    body:SEC('Query Flow',[S('01','Question arrives via any <span class="hl">LLM interface</span>'),S('02','LLM reads <span class="hl">index.md</span> — the master page catalog'),S('03','Reads relevant wiki pages for <span class="hl">synthesized context</span>'),S('04','Searches <span class="hl">MemPalace</span> for long-tail recall if needed'),S('05','Synthesizes a <span class="hl">complete answer</span>'),S('06','Optionally files <span class="hl">evergreen answers</span> back into Wiki')])},
+  harvest:{icon:'♻',title:'HARVEST',sub:'Operation 03 · Scheduled · Nightly',color:'#d97706',
+    desc:'The bridge between isolated agent memory and shared knowledge. Butch, Alice, Hank, and other agents run separate sessions — they learn things never explicitly documented. HARVEST mines those sessions and promotes worthy facts into the shared wiki.',
+    body:SEC('Harvest Flow',[S('01','Scheduled job runs — typically <span class="hl">nightly</span>'),S('02','Mines recent <span class="hl">agent session logs</span>'),S('03','Identifies facts and decisions <span class="hl">worth preserving</span>'),S('04','Promotes discoveries into <span class="hl">shared wiki pages</span>'),S('05','Bridges isolated agent knowledge → <span class="hl">synchronized system</span>')])+
+    '<div class="mwarn" style="border-color:rgba(217,119,6,.25);background:rgba(217,119,6,.05);color:rgba(217,119,6,.55);">Without HARVEST, every agent session is an island. Knowledge built by Butch in OpenClaw never reaches Claude Code unless it\'s harvested into the shared wiki.</div>'},
+  lint:{icon:'🔧',title:'LINT',sub:'Operation 04 · Periodic Health Check',color:'#dc2626',
+    desc:'The wiki maintenance operation. Runs periodically to keep the wiki healthy and coherent. Surfaces problems for your review — then waits for your approval before making any changes.',
+    body:SEC('What LINT Checks',[S('→','<span class="hl">Orphan pages</span> — pages no other page links to'),S('→','<span class="hl">Broken links</span> — references to non-existent pages'),S('→','<span class="hl">Stale pages</span> — content that may be significantly outdated'),S('→','<span class="hl">Contradictions</span> — pages that conflict with each other'),S('→','<span class="hl">Oversized pages</span> — pages that should be split')])+
+    '<div class="mwarn">⚑ &nbsp;LINT never auto-fixes. It surfaces problems and waits for your sign-off. The wiki is yours — no changes without your approval.</div>'},
+  wiki:{icon:'📖',title:'Wiki',sub:'The Curated 5% · 200–400 Active Pages',color:'#d97706',
+    desc:'The distilled synthesis of what matters. Not everything — just entities, projects, people, concepts, and decisions worth maintaining as living documents. Cross-linked, LLM-maintained, always human-readable.',
+    body:SEC('What Qualifies',[S('✓','Active projects with enough context to matter'),S('✓','Real people you interact with regularly'),S('✓','Recurring concepts worth defining properly'),S('✓','Infrastructure components and their relationships'),S('✓','Important decisions <span class="hl">with their reasoning</span>'),S('✓','Patterns and frameworks you\'ve internalized'),S('✗','Raw notes, drafts, one-off files → MemPalace instead')])+
+    SEC('Structure',[S('📄','<span class="hl">WIKI.md</span> — schema and operating manual'),S('📋','<span class="hl">index.md</span> — catalog of every page'),S('📝','<span class="hl">log.md</span> — append-only operation log'),S('📁','<span class="hl">Projects/ · People/ · Concepts/ · Infrastructure/ · Archive/</span>')])},
+  mem:{icon:'🧲',title:'MemPalace',sub:'The Searchable 100% · Everything Indexed',color:'#a855f7',
+    desc:'The semantic search substrate beneath the wiki. Every file ever dropped, every session log, every transcript — indexed and retrievable. When the wiki doesn\'t have the answer, MemPalace does.',
+    body:SEC('What\'s Indexed',[S('→','Raw source files archived to <span class="hl">Raw Sources/YYYY-MM/</span>'),S('→','Agent session logs from Butch, Alice, Hank, and others'),S('→','Notes, drafts, and work-in-progress documents'),S('→','Transcripts from voice sessions and meetings'),S('→','Semantic vectors for every chunk of content')])+
+    '<div class="mcode"><span class="cmd">$</span> mempalace search "chorus architecture"<br><span class="cmd">$</span> mempalace query --wiki-first "what did alice decide on auth?"<br><span class="cmd">$</span> mempalace ingest ./session-2026-04-23.md</div>'},
+  'claude-code':{icon:'🖥',title:'Claude Code',sub:'CLI Consumer · You\'re Using It Now',color:'#0891b2',
+    desc:'Claude Code reads the wiki first for structured context, then searches MemPalace for long-tail recall. It can also write back — filing discoveries, updating pages, and maintaining both layers over time.',
+    body:SEC('How It Uses the System',[S('1','Reads <span class="hl">index.md</span> for project context at session start'),S('2','Reads relevant <span class="hl">wiki pages</span> before touching unfamiliar code'),S('3','Searches <span class="hl">MemPalace</span> for prior decisions and session context'),S('4','Files new discoveries back into <span class="hl">wiki or memory</span>')])},
+  codex:{icon:'⚡',title:'Codex',sub:'CLI Consumer · GPT-5.4 via OpenAI',color:'#0891b2',
+    desc:'Codex accesses the shared wiki for cross-LLM context. What Claude Code learns, Codex can use — because it all lives in shared markdown files, not in any one model\'s context window.',
+    body:SEC('Cross-LLM Benefit',[S('→','Reads the same <span class="hl">wiki markdown</span> as Claude Code'),S('→','Benefits from HARVEST sessions run by Claude agents'),S('→','No knowledge siloing between model providers')])},
+  'claude-desktop':{icon:'🤖',title:'Claude Desktop',sub:'GUI Consumer · MCP Integration',color:'#0891b2',
+    desc:'Claude Desktop connects via MCP server to read the wiki and search MemPalace. Great for casual Q&A, document drafting, and anything that benefits from full knowledge context without a terminal.',
+    body:SEC('Access Pattern',[S('→','MCP server exposes <span class="hl">wiki read access</span>'),S('→','MemPalace search available as an MCP tool'),S('→','Natural language queries over the full corpus')])},
+  openclaw:{icon:'🐾',title:'OpenClaw',sub:'Agent Host · Butch · Alice · Janice · Doctor Little',color:'#0891b2',
+    desc:'OpenClaw hosts the persistent agents. Their sessions generate the raw material that HARVEST mines into the shared wiki — bridging isolated agent knowledge into the synchronized system.',
+    body:SEC('Agent ↔ Wiki Relationship',[S('→','<span class="hl">Butch</span> (chairman) runs AGENDA.md coordination'),S('→','<span class="hl">Alice</span> (CEO) operational decisions → HARVEST promotes'),S('→','<span class="hl">Janice</span> nightly reconciliation feeds the log'),S('→','All agents read wiki for <span class="hl">shared context</span>')])},
+  cursor:{icon:'🪄',title:'Cursor',sub:'IDE Consumer · SAR Builds Only',color:'#0891b2',
+    desc:'Cursor (with Composer 2) handles SAR builds and reads the wiki for project context. SAR is Cursor-only by policy — Claude Code doesn\'t touch it.',
+    body:SEC('Usage Pattern',[S('→','Reads <span class="hl">Wiki/Projects/SAR</span> for build context'),S('→','Searches MemPalace for prior build decisions'),S('→','Composer 2 agent for SAR-only work (policy rule)')])},
+  mcp:{icon:'🌐',title:'MCP Clients',sub:'Any MCP-Capable Client · Open Interface Layer',color:'#0891b2',
+    desc:'Any LLM or tool that supports the Model Context Protocol can connect to MemPalace\'s MCP server and consume the wiki + search substrate. Knowledge isn\'t locked to any single provider.',
+    body:SEC('MCP Server Exposes',[S('→','<span class="hl">read_wiki_page</span> — fetch any wiki page by path'),S('→','<span class="hl">list_wiki_index</span> — get the full page catalog'),S('→','<span class="hl">search_mempalace</span> — semantic search across everything'),S('→','<span class="hl">ingest_source</span> — drop a file into Inbox for processing')])},
+};
+
+// MODAL
+let activeNode=null,tourMode=false;
+function openModal(id){
+  const d=DATA[id];if(!d)return;
+  activeNode=id;
+  const bar=document.getElementById('mbar');
+  bar.style.background=d.color;bar.style.boxShadow=`0 0 20px ${d.color}88`;
+  document.getElementById('mico').textContent=d.icon;
+  document.getElementById('mttl').textContent=d.title;
+  document.getElementById('msub').textContent=d.sub;
+  document.getElementById('mbdy').innerHTML=(d.desc?`<div class="mdsc">${d.desc}</div>`:'')+d.body;
+  document.getElementById('mb').classList.add('open');
+  document.getElementById('modal').classList.add('open');
+  if(!tourMode)document.querySelectorAll('.node').forEach(n=>n.classList.toggle('dimmed',n.id!==`n${id.replace(/-/g,'').replace('claudecode','cc').replace('claudedesktop','cd').replace('openclaw','oc').replace('cursor','cr').replace('mcp','mp').replace('codex','cx').replace('wiki','w').replace('mem','m').replace('you','y').replace('inbox','i').replace('ingest','ig').replace('query','q').replace('harvest','h').replace('lint','l')}`));
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('mb').classList.remove('open');
+  activeNode=null;
+  if(!tourMode)document.querySelectorAll('.node').forEach(n=>{n.classList.remove('dimmed');n.classList.remove('thl');});
+}
+
+// TOUR
+let tourStep=0;
+const TOUR=[
+  {id:'you',lbl:'You — the source'},{id:'inbox',lbl:'Inbox — drop zone'},
+  {id:'ingest',lbl:'INGEST — op 01'},{id:'query',lbl:'QUERY — op 02'},
+  {id:'harvest',lbl:'HARVEST — op 03'},{id:'lint',lbl:'LINT — op 04'},
+  {id:'wiki',lbl:'Wiki — curated 5%'},{id:'mem',lbl:'MemPalace — 100%'},
+  {id:'claude-code',lbl:'Consumers — any LLM'},
+];
+// Map from data id to node element id
+const ID_MAP={you:'ny',inbox:'ni',ingest:'nig',query:'nq',harvest:'nh',lint:'nl',wiki:'nw',mem:'nm','claude-code':'ncc',codex:'ncx','claude-desktop':'ncd',openclaw:'noc',cursor:'ncr',mcp:'nmp'};
+
+function buildDots(){
+  const el=document.getElementById('tdots');el.innerHTML='';
+  TOUR.forEach((_,i)=>{const d=document.createElement('div');d.className='tdot'+(i===tourStep?' active':'');d.onclick=()=>goStep(i);el.appendChild(d);});
+}
+function goStep(i){
+  tourStep=i;const step=TOUR[i];
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('mb').classList.remove('open');
+  document.querySelectorAll('.node').forEach(n=>{n.classList.add('dimmed');n.classList.remove('thl');});
+  const nid=ID_MAP[step.id];
+  const target=document.getElementById(nid);
+  if(target){target.classList.remove('dimmed');target.classList.add('thl');target.scrollIntoView({behavior:'smooth',block:'center'});}
+  setTimeout(()=>{
+    // open modal directly without the dimming logic
+    const d=DATA[step.id];if(!d)return;
+    activeNode=step.id;
+    const bar=document.getElementById('mbar');bar.style.background=d.color;bar.style.boxShadow=`0 0 20px ${d.color}88`;
+    document.getElementById('mico').textContent=d.icon;document.getElementById('mttl').textContent=d.title;document.getElementById('msub').textContent=d.sub;
+    document.getElementById('mbdy').innerHTML=(d.desc?`<div class="mdsc">${d.desc}</div>`:'')+d.body;
+    document.getElementById('mb').classList.add('open');document.getElementById('modal').classList.add('open');
+  },280);
+  document.getElementById('tlbl').textContent=`${i+1} / ${TOUR.length}`;
+  buildDots();
+}
+function startTour(){
+  tourMode=true;tourStep=0;
+  document.getElementById('btour').classList.add('active');document.getElementById('btour').textContent='■  TOURING';
+  document.getElementById('tbar').classList.add('visible');
+  buildDots();goStep(0);
+}
+function tourNext(){if(tourStep<TOUR.length-1)goStep(tourStep+1);else endTour();}
+function tourPrev(){if(tourStep>0)goStep(tourStep-1);}
+function endTour(){
+  tourMode=false;closeModal();
+  document.getElementById('tbar').classList.remove('visible');
+  document.getElementById('btour').classList.remove('active');document.getElementById('btour').textContent='▷  WALK ME THROUGH IT';
+  document.querySelectorAll('.node').forEach(n=>{n.classList.remove('dimmed');n.classList.remove('thl');});
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(activeNode)closeModal();else if(tourMode)endTour();}
+  if(e.key==='ArrowRight'&&tourMode)tourNext();
+  if(e.key==='ArrowLeft'&&tourMode)tourPrev();
+  if((e.key==='p'||e.key==='P')&&!tourMode&&!activeNode)startTour();
+});
+</script>
+</body>
+</html>

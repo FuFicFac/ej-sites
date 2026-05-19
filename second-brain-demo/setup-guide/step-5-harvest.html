@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Step 5 | HARVEST</title><link rel="stylesheet" href="setup-guide.css" /><script src="setup-guide.js" defer></script></head>
+  <body><div class="shell"><header class="site-header"><nav class="site-nav" aria-label="Setup guide"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>EJ's Palace Wiki</strong><span>Second Brain Setup Guide</span></span></a><div class="nav-links"><a href="../index.html">Back to Demo</a><a href="index.html">Guide Home</a><a href="full-setup.html">Full Setup</a><a class="is-active" href="step-5-harvest.html">Step 5</a></div></nav></header>
+  <main class="step-shell"><aside class="side-panel section-panel"><p class="section-kicker">Install Path</p><h2>HARVEST</h2><p>This is the automation layer that turns past work into future leverage.</p><ul><li><a href="step-1-mempalace.html">1. MemPalace</a></li><li><a href="step-2-llm-wiki.html">2. LLM Wiki Pattern</a></li><li><a href="step-3-palace-wiki.html">3. EJ's Palace Wiki</a></li><li><a href="step-4-agent-context.html">4. SOUL.md + MEMORY.md</a></li><li><a class="is-current" href="step-5-harvest.html">5. HARVEST</a></li></ul></aside>
+  <div><section class="hero hero-compact"><p class="eyebrow">Step 5</p><h1>Install HARVEST</h1><p>HARVEST is the scheduled bridge from agent sessions into wiki pages. It is what makes the system learn while you sleep instead of waiting for manual cleanup that never quite happens.</p></section>
+  <section class="resource-box"><p class="section-kicker">Run the Automation</p><h2>Get HARVEST</h2><p>Run it on OpenClaw, connect it to your session logs, and let the system promote durable knowledge on a schedule.</p><div class="resource-actions"><a class="button" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">Get HARVEST →</a></div><div class="resource-links"><a class="resource-link" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">Platform: openclaw/openclaw</a><a class="resource-link" href="https://github.com/FuFicFac" target="_blank" rel="noreferrer">Reference EJ's GitHub org</a></div></section>
+  <section class="section overview"><p class="section-kicker">Overview</p><h2>From file cabinet to living system</h2><p>HARVEST mines agent sessions, scores candidate facts, and promotes the durable ones into the wiki. Without it, every session is an island. With it, work becomes memory, memory becomes context, and context makes the next round of work better.</p></section>
+  <section class="section"><div class="section-header"><div><p class="section-kicker">Deep Dive</p><h2>Expand the loop</h2></div><p>This is the page to end on in the livestream, because it reveals why the whole stack compounds.</p></div><div class="accordion-group">
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>How the scheduled cron works</h3><p>A timed job sweeps recent sessions after the active work is done.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>The HARVEST run should happen on a predictable cadence. It reads recent session logs, extracts candidate facts, associates them with projects or concepts, and routes them into review or auto-promotion flows.</p><pre><code>cron
+  -> read recent agent sessions
+  -> extract candidate facts
+  -> score confidence
+  -> propose wiki updates
+  -> log what changed</code></pre></div></details>
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>Confidence thresholds</h3><p>Not every extracted fact deserves the same treatment.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>Use thresholds to keep automation useful instead of reckless. Facts above <code>0.85</code> can auto-promote. Facts between <code>0.5</code> and <code>0.85</code> should become candidates for human or model review. Facts below <code>0.5</code> should be discarded so the system does not accumulate noise.</p><pre><code>&gt; 0.85    -> auto-promote to wiki
+0.5-0.85 -> candidate / review queue
+&lt; 0.5     -> discard</code></pre></div></details>
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>The compounding loop</h3><p>Work feeds HARVEST, HARVEST feeds the wiki, and the wiki feeds better work.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>This is the loop to repeat on stream: Work -> Harvest -> Wiki -> Context -> Better Work -> Harvest again. Each pass raises the starting point for the next session. That means the system does not merely store information. It improves the quality of future reasoning.</p><ul><li>Sessions become evidence.</li><li>Evidence becomes structure.</li><li>Structure becomes agent context.</li><li>Context improves execution the next day.</li></ul></div></details>
+  </div></section>
+  <section class="section"><div class="section-header"><div><p class="section-kicker">Installation</p><h2>Step-by-step</h2></div></div><div class="install-grid"><div class="install-card"><h3>Install just this</h3><p>Set up HARVEST if you already have sessions and a wiki but no reliable promotion loop.</p><ol><li>Define the session sources HARVEST should read.</li><li>Implement the confidence routing thresholds.</li><li>Write the promoted updates into the wiki and log them.</li></ol><pre><code># pseudocode
+run-harvest --source ./sessions --wiki ./Wiki --log ./log.md
+
+# score each candidate
+# promote, queue, or discard</code></pre></div>
+  <div class="install-card"><h3>Install as part of the full system</h3><p>Connect HARVEST to MemPalace, the Palace Wiki, and MEMORY.md maintenance.</p><ol><li>Read session logs already ingested into memory.</li><li>Promote durable facts to the right folder inside <code>Wiki/</code>.</li><li>Log operations and update standing agent context when needed.</li></ol><pre><code>Work
+ -> HARVEST
+ -> Wiki/Projects or Wiki/Concepts
+ -> log.md
+ -> refreshed context for the next agent run</code></pre></div></div></section>
+  <div class="step-nav"><a class="ghost-button" href="step-4-agent-context.html">Previous: SOUL.md + MEMORY.md</a><a class="button" href="full-setup.html">See the full setup</a></div></div></main></div></body>
+  </html>

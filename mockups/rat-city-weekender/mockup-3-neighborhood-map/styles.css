@@ -1,0 +1,317 @@
+/* Rat City Weekender — Mockup 3: The Neighborhood Map */
+
+:root {
+  --bg: #e8f0ea;
+  --water: #9ec5d6;
+  --ink: #0f172a;
+  --muted: #475569;
+  --card: #ffffff;
+  --wc: #15803d;
+  --wc-light: #dcfce7;
+  --rc: #b45309;
+  --rc-light: #ffedd5;
+  --hp: #1d4ed8;
+  --hp-light: #dbeafe;
+  --sd: #7c3aed;
+  --sd-light: #ede9fe;
+  --line: #cbd5e1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, #dfeaf0 0%, var(--bg) 35%);
+  line-height: 1.45;
+}
+
+a {
+  color: inherit;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: rgba(15, 23, 42, 0.92);
+  color: #f1f5f9;
+  font-size: 0.85rem;
+}
+
+.site-nav strong {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.site-nav a {
+  color: #a5f3fc;
+  text-decoration: none;
+  margin-left: 0.45rem;
+}
+
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2.5rem;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.intro p {
+  margin: 0.5rem auto 0;
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: center;
+  margin: 1rem 0 1.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend .wc i {
+  background: var(--wc);
+}
+.legend .rc i {
+  background: var(--rc);
+}
+.legend .hp i {
+  background: var(--hp);
+}
+.legend .sd i {
+  background: var(--sd);
+}
+
+.layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
+  }
+}
+
+.map-frame {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--line);
+}
+
+.map-frame h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.map-svg-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--water) 0%, #b8d9e8 40%, #c5e3d1 100%);
+}
+
+.map-svg-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.zone-hit {
+  cursor: pointer;
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1.5;
+  transition: filter 0.2s, opacity 0.2s;
+}
+
+.zone-hit:hover,
+.zone-hit:focus {
+  filter: brightness(1.08) saturate(1.1);
+  outline: none;
+}
+
+.zone-hit.is-active {
+  filter: brightness(1.12) saturate(1.15);
+  stroke: #fff;
+  stroke-width: 2.5;
+}
+
+.zone-hit:focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 3px;
+}
+
+.map-hint {
+  margin: 0.65rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.panels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.zone-panel {
+  display: none;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+}
+
+.zone-panel.is-visible {
+  display: block;
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.zone-panel[data-zone="white-center"] {
+  border-color: var(--wc);
+  background: linear-gradient(180deg, var(--wc-light) 0%, #fff 28%);
+}
+
+.zone-panel[data-zone="rat-city"] {
+  border-color: var(--rc);
+  background: linear-gradient(180deg, var(--rc-light) 0%, #fff 28%);
+}
+
+.zone-panel[data-zone="highland-park"] {
+  border-color: var(--hp);
+  background: linear-gradient(180deg, var(--hp-light) 0%, #fff 28%);
+}
+
+.zone-panel[data-zone="south-delridge"] {
+  border-color: var(--sd);
+  background: linear-gradient(180deg, var(--sd-light) 0%, #fff 28%);
+}
+
+.zone-panel h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.zone-panel .blurb {
+  margin: 0 0 0.85rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.mini-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.mini-card {
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--line);
+  font-size: 0.86rem;
+}
+
+.mini-card strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+
+.mini-card .tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.placeholder-panel {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px dashed var(--line);
+}
+
+.placeholder-panel.is-hidden {
+  display: none;
+}
+
+.footer-strip {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .zone-panel.is-visible {
+    animation: none;
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Step 4 | SOUL.md + MEMORY.md</title><link rel="stylesheet" href="setup-guide.css" /><script src="setup-guide.js" defer></script></head>
+  <body><div class="shell"><header class="site-header"><nav class="site-nav" aria-label="Setup guide"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>EJ's Palace Wiki</strong><span>Second Brain Setup Guide</span></span></a><div class="nav-links"><a href="../index.html">Back to Demo</a><a href="index.html">Guide Home</a><a href="full-setup.html">Full Setup</a><a class="is-active" href="step-4-agent-context.html">Step 4</a></div></nav></header>
+  <main class="step-shell"><aside class="side-panel section-panel"><p class="section-kicker">Install Path</p><h2>Agent Context Files</h2><p>This layer gives models a stable self and a stable picture of ongoing work.</p><ul><li><a href="step-1-mempalace.html">1. MemPalace</a></li><li><a href="step-2-llm-wiki.html">2. LLM Wiki Pattern</a></li><li><a href="step-3-palace-wiki.html">3. EJ's Palace Wiki</a></li><li><a class="is-current" href="step-4-agent-context.html">4. SOUL.md + MEMORY.md</a></li><li><a href="step-5-harvest.html">5. HARVEST</a></li></ul></aside>
+  <div><section class="hero hero-compact"><p class="eyebrow">Step 4</p><h1>Install SOUL.md and MEMORY.md</h1><p>These files give AI agents persistent identity and memory. Any capable model can read them and immediately understand who it is, how it should behave, and what facts it should carry forward.</p></section>
+  <section class="resource-box"><p class="section-kicker">Create These Files</p><h2>Get SOUL.md + MEMORY.md</h2><p>Create them in your project root, then load them every time the agent boots so identity and context stay stable.</p><div class="resource-actions"><a class="button" href="https://github.com/anthropics/claude-code" target="_blank" rel="noreferrer">Get SOUL.md + MEMORY.md →</a><a class="ghost-button" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">OpenClaw docs</a></div><div class="resource-links"><a class="resource-link" href="https://github.com/anthropics/claude-code" target="_blank" rel="noreferrer">Reference: anthropics/claude-code</a><a class="resource-link" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">Platform: openclaw/openclaw</a></div></section>
+  <section class="section overview"><p class="section-kicker">Overview</p><h2>Why context files matter</h2><p><code>SOUL.md</code> defines personality, values, voice, and guardrails. <code>MEMORY.md</code> stores standing facts, active context, and operational rules. Together they make the system model-agnostic across GLM 5.1, GPT-5.4, and Claude Opus.</p></section>
+  <section class="section"><div class="section-header"><div><p class="section-kicker">Deep Dive</p><h2>Expand the file roles</h2></div><p>This is the human-readable contract an agent reads before it starts making decisions.</p></div><div class="accordion-group">
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>What belongs in SOUL.md</h3><p>Personality and behavior constraints, not project scratch notes.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>SOUL.md should answer questions like: Who is this agent? What tone does it use? What values shape its decisions? What lines should it not cross? This keeps the agent coherent across sessions and across model swaps.</p><pre><code>SOUL.md
+- name and role
+- voice and emotional range
+- values
+- collaboration style
+- guardrails</code></pre></div></details>
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>What belongs in MEMORY.md</h3><p>Stable facts, active context, and operational truths worth reloading.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>MEMORY.md is the curated long-term context. It should track projects, important personal facts relevant to work, active commitments, and reliable lessons learned. It is not a full diary. It is the distilled state that helps the agent start informed.</p><ul><li>standing project context</li><li>important people and relationships</li><li>current rules of operation</li><li>durable facts the model should not keep forgetting</li></ul></div></details>
+  <details class="accordion"><summary><div class="accordion-label"><span><h3>Why this is model-agnostic</h3><p>The file format travels better than a provider-specific feature.</p></span><small>Expand</small></div></summary><div class="accordion-copy"><p>Any model that can read text can read these files. That means the agent's identity and working context survive platform changes. You are not betting your organizational memory on a single chat product keeping state correctly forever.</p><pre><code>GLM 5.1   -> reads SOUL.md + MEMORY.md
+GPT-5.4   -> reads SOUL.md + MEMORY.md
+Claude Opus -> reads SOUL.md + MEMORY.md
+
+Same files. Different models. Consistent operator.</code></pre></div></details>
+  </div></section>
+  <section class="section"><div class="section-header"><div><p class="section-kicker">Installation</p><h2>Step-by-step</h2></div></div><div class="install-grid"><div class="install-card"><h3>Install just this</h3><p>Do this now if your agent feels smart but inconsistent.</p><ol><li>Create <code>SOUL.md</code> with voice, role, values, and guardrails.</li><li>Create <code>MEMORY.md</code> with durable facts and current operating context.</li><li>Reload the agent with both files available at startup.</li></ol><pre><code>touch SOUL.md MEMORY.md
+
+# SOUL.md = identity
+# MEMORY.md = standing context
+# refresh the agent so it reads both on boot</code></pre></div>
+  <div class="install-card"><h3>Install as part of the full system</h3><p>Tie these files to the wiki and memory architecture so all four layers reinforce each other.</p><ol><li>Mirror major project names between MEMORY.md and the wiki.</li><li>Use HARVEST outputs to propose MEMORY.md updates when appropriate.</li><li>Keep SOUL.md stable and MEMORY.md curated, not bloated.</li></ol><pre><code>Agent boot
+  -> SOUL.md
+  -> MEMORY.md
+  -> QUERY wiki
+  -> QUERY MemPalace
+
+Now the agent starts oriented before live work begins.</code></pre></div></div></section>
+  <div class="step-nav"><a class="ghost-button" href="step-3-palace-wiki.html">Previous: EJ's Palace Wiki</a><a class="button" href="step-5-harvest.html">Next: HARVEST</a></div></div></main></div></body>
+  </html>

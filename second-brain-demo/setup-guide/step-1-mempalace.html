@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step 1 | MemPalace</title>
+    <link rel="stylesheet" href="setup-guide.css" />
+    <script src="setup-guide.js" defer></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Setup guide">
+          <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>EJ's Palace Wiki</strong><span>Second Brain Setup Guide</span></span></a>
+          <div class="nav-links"><a href="../index.html">Back to Demo</a><a href="index.html">Guide Home</a><a href="full-setup.html">Full Setup</a><a class="is-active" href="step-1-mempalace.html">Step 1</a></div>
+        </nav>
+      </header>
+      <main class="step-shell">
+        <aside class="side-panel section-panel">
+          <p class="section-kicker">Install Path</p>
+          <h2>MemPalace</h2>
+          <p>Start with the memory substrate. Every other layer gets stronger once the agent can remember real prior work.</p>
+          <ul>
+            <li><a class="is-current" href="step-1-mempalace.html">1. MemPalace</a></li>
+            <li><a href="step-2-llm-wiki.html">2. LLM Wiki Pattern</a></li>
+            <li><a href="step-3-palace-wiki.html">3. EJ's Palace Wiki</a></li>
+            <li><a href="step-4-agent-context.html">4. SOUL.md + MEMORY.md</a></li>
+            <li><a href="step-5-harvest.html">5. HARVEST</a></li>
+          </ul>
+        </aside>
+        <div>
+          <section class="hero hero-compact">
+            <p class="eyebrow">Step 1</p>
+            <h1>Install MemPalace</h1>
+            <p>MemPalace is long-term semantic memory for AI agents. It stores raw sources, session logs, notes, and transcripts in searchable vector-indexed drawers so your conversations stop resetting to zero.</p>
+          </section>
+
+          <section class="resource-box">
+            <p class="section-kicker">Get the Tool</p>
+            <h2>Get MemPalace</h2>
+            <p>Install it, connect your source folders, and give your agent real long-term recall from day one.</p>
+            <div class="resource-actions">
+              <a class="button" href="https://github.com/ekelloharrid/mempalace" target="_blank" rel="noreferrer">Get MemPalace →</a>
+              <a class="ghost-button" href="https://www.npmjs.com/package/mempalace" target="_blank" rel="noreferrer">View npm package</a>
+            </div>
+            <div class="resource-links">
+              <a class="resource-link" href="https://github.com/ekelloharrid/mempalace" target="_blank" rel="noreferrer">GitHub: ekelloharrid/mempalace</a>
+              <a class="resource-link" href="https://www.npmjs.com/package/mempalace" target="_blank" rel="noreferrer">npm: mempalace</a>
+            </div>
+          </section>
+
+          <section class="section overview">
+            <p class="section-kicker">Overview</p>
+            <h2>Why this comes first</h2>
+            <p>Without a memory layer, every session starts with partial context and lots of repeated setup. With MemPalace, the agent can search durable history across projects and carry the thread between sessions.</p>
+            <p>In ej's production setup, this means 43,000+ drawers of retrievable context instead of a blank slate.</p>
+          </section>
+
+          <section class="section">
+            <div class="section-header"><div><p class="section-kicker">Deep Dive</p><h2>Expand the concepts</h2></div><p>These sections are designed for live teaching: open the summary, go deep, then collapse and move to the next concept.</p></div>
+            <div class="accordion-group">
+              <details class="accordion" id="mempalace-raw">
+                <summary><div class="accordion-label"><span><h3>What a drawer actually is</h3><p>A drawer is not just a file path. It is a semantically retrievable chunk of experience.</p></span><small>Expand</small></div></summary>
+                <div class="accordion-copy">
+                  <p>Think of drawers as memory containers indexed by meaning instead of folder hierarchy. A drawer might originate from a transcript, a research note, a call summary, or an agent session log. The point is not where the text lived; the point is whether the system can pull it back when the next question rhymes with it.</p>
+                  <p>That changes the agent's operating posture. Instead of asking the human to re-explain a project, it can search for what was previously decided, what failed, and what evidence already exists.</p>
+                  <pre><code># example queries once memory exists
+mempalace query "What decisions did we make about HARVEST thresholds?"
+mempalace query "What was the last blocker on the Palace Wiki build?"
+mempalace query "Summarize the notes related to Canine Casa onboarding."</code></pre>
+                </div>
+              </details>
+              <details class="accordion" id="mempalace-why">
+                <summary><div class="accordion-label"><span><h3>Why semantic memory beats chat history</h3><p>Chat logs are sequential. Memory needs to be searchable by relevance.</p></span><small>Expand</small></div></summary>
+                <div class="accordion-copy">
+                  <p>A long transcript is useful as evidence, but not as an operating system. Agents need recall, not just archives. Semantic memory lets the system find the right past fragment even when the wording changes, the question is indirect, or the relevant fact was buried in a side conversation.</p>
+                  <ul>
+                    <li>Chat history is ordered by time. Memory retrieval is ordered by relevance.</li>
+                    <li>Folder structures force you to know where you put something. Semantic memory lets the system find it by meaning.</li>
+                    <li>Without this layer, every model spends tokens rediscovering basics.</li>
+                  </ul>
+                </div>
+              </details>
+              <details class="accordion" id="mempalace-layout">
+                <summary><div class="accordion-label"><span><h3>What to ingest first</h3><p>Start with the raw materials that already describe your real work.</p></span><small>Expand</small></div></summary>
+                <div class="accordion-copy">
+                  <p>Your first pass should include recent session logs, notes, transcripts, project plans, and any existing wiki or diary material. Do not wait for perfect cleanup. The point is to get memory online quickly, then improve the feed over time.</p>
+                  <pre><code>Sources worth ingesting first:
+- session logs
+- meeting transcripts
+- raw notes and scratchpads
+- project docs
+- diary entries
+- exported chat summaries</code></pre>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header"><div><p class="section-kicker">Installation</p><h2>Step-by-step</h2></div></div>
+            <div class="install-grid">
+              <div class="install-card">
+                <h3>Install just this</h3>
+                <p>Bring memory online first if your agents keep forgetting decisions, names, and prior work.</p>
+                <ol>
+                  <li>Install the package globally.</li>
+                  <li>Create a <code>mempalace.yaml</code> file pointing at your raw sources.</li>
+                  <li>Run an initial ingest to populate drawers.</li>
+                  <li>Test recall with a few natural-language queries.</li>
+                </ol>
+                <pre><code>npm install -g mempalace
+
+cat > mempalace.yaml &lt;&lt;'EOF'
+sources:
+  - ./Inbox
+  - ./sessions
+  - ./notes
+EOF
+
+mempalace ingest .
+mempalace query "What does this system already know?"</code></pre>
+              </div>
+              <div class="install-card">
+                <h3>Install as part of the full system</h3>
+                <p>Point MemPalace at the same raw inputs that will later feed the wiki and HARVEST loop.</p>
+                <ol>
+                  <li>Create a shared raw source layout: <code>Inbox/</code>, session logs, transcripts, notes.</li>
+                  <li>Confirm the memory output will be available to later HARVEST and QUERY workflows.</li>
+                  <li>Use the same naming conventions that your Palace Wiki will use for projects and people.</li>
+                </ol>
+                <pre><code>./Inbox
+./sessions
+./transcripts
+./notes
+./Wiki
+
+# MemPalace reads the raw side
+# Palace Wiki curates the durable side</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <div class="step-nav">
+            <a class="ghost-button" href="index.html">Back to main page</a>
+            <a class="button" href="step-2-llm-wiki.html">Next: LLM Wiki Pattern</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+  </html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Brain — Second Brain Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-brain">
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Second Brain Demo</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="is-active" href="brain.html">My Brain</a></li>
+          <li><a href="normal-brain.html">Normal Brain</a></li>
+          <li><a href="second-brain.html">Second Brain</a></li>
+          <li><a href="harvest.html">HARVEST</a></li>
+          <li><a href="connections.html">Connections</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">Page 1</p>
+        <h1>My Brain</h1>
+        <p class="hero-lede">
+          Not broken. Not lazy. Just running on an interest-based nervous system where the signal changes fast,
+          the working set is unstable, and the thread gets dropped in midair.
+        </p>
+      </section>
+
+      <section class="page-section">
+        <h2>Pinball, Not Pipeline</h2>
+        <p>
+          Ideas arrive with real force. They branch. They loop. Some turn into action immediately. Others vanish
+          because nothing held onto them long enough.
+        </p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 1100 620" role="img" aria-labelledby="brain-diagram-title">
+            <title id="brain-diagram-title">ADHD thought diagram with bouncing tasks and dropped threads</title>
+            <defs>
+              <linearGradient id="brainFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f97316" />
+                <stop offset="50%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#dc2626" />
+              </linearGradient>
+              <filter id="warmGlow">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <path d="M110 290 C220 120, 360 130, 440 280 S650 520, 760 330 S930 130, 1010 280" fill="none" stroke="url(#brainFlow)" stroke-width="10" opacity="0.5" />
+            <path d="M120 350 C210 450, 330 470, 430 380 S620 200, 770 280 S930 440, 1000 350" fill="none" stroke="#7c2d12" stroke-width="6" opacity="0.45" />
+            <circle class="pinball" cx="0" cy="0" r="12" fill="#fde68a" filter="url(#warmGlow)" style="offset-path:path('M110 290 C220 120, 360 130, 440 280 S650 520, 760 330 S930 130, 1010 280');" />
+
+            <g class="thought-bubble" data-thought="launch">
+              <circle cx="220" cy="170" r="72" fill="rgba(251,146,60,0.18)" stroke="#fb923c" />
+              <text x="220" y="158" text-anchor="middle" fill="#fef3c7" font-size="26" font-family="Plus Jakarta Sans">Start a</text>
+              <text x="220" y="192" text-anchor="middle" fill="#fef3c7" font-size="26" font-family="Plus Jakarta Sans">channel</text>
+            </g>
+            <g class="thought-bubble" data-thought="research">
+              <circle cx="470" cy="135" r="70" fill="rgba(248,113,113,0.16)" stroke="#f97316" />
+              <text x="470" y="138" text-anchor="middle" fill="#fff7ed" font-size="24" font-family="Plus Jakarta Sans">Look up</text>
+              <text x="470" y="170" text-anchor="middle" fill="#fff7ed" font-size="24" font-family="Plus Jakarta Sans">one thing</text>
+            </g>
+            <g class="thought-bubble" data-thought="email">
+              <circle cx="800" cy="190" r="78" fill="rgba(234,88,12,0.15)" stroke="#fbbf24" />
+              <text x="800" y="178" text-anchor="middle" fill="#fef3c7" font-size="24" font-family="Plus Jakarta Sans">Reply to</text>
+              <text x="800" y="212" text-anchor="middle" fill="#fef3c7" font-size="24" font-family="Plus Jakarta Sans">that email</text>
+            </g>
+            <g class="thought-bubble" data-thought="sidequest">
+              <circle cx="640" cy="435" r="82" fill="rgba(220,38,38,0.13)" stroke="#f97316" />
+              <text x="640" y="423" text-anchor="middle" fill="#fff7ed" font-size="22" font-family="Plus Jakarta Sans">Accidental</text>
+              <text x="640" y="455" text-anchor="middle" fill="#fff7ed" font-size="22" font-family="Plus Jakarta Sans">side quest</text>
+            </g>
+
+            <g id="brain-task-group">
+              <rect x="120" y="500" width="160" height="22" rx="11" fill="rgba(255,255,255,0.08)" />
+              <rect id="task-fill-1" x="120" y="500" width="88" height="22" rx="11" fill="#f97316" />
+              <text x="120" y="490" fill="#fdba74" font-size="15" font-family="Plus Jakarta Sans">Podcast outline</text>
+
+              <rect x="330" y="500" width="160" height="22" rx="11" fill="rgba(255,255,255,0.08)" />
+              <rect id="task-fill-2" x="330" y="500" width="36" height="22" rx="11" fill="#fbbf24" />
+              <text x="330" y="490" fill="#fdba74" font-size="15" font-family="Plus Jakarta Sans">Tax admin</text>
+
+              <rect x="540" y="500" width="160" height="22" rx="11" fill="rgba(255,255,255,0.08)" />
+              <rect id="task-fill-3" x="540" y="500" width="120" height="22" rx="11" fill="#ef4444" />
+              <text x="540" y="490" fill="#fdba74" font-size="15" font-family="Plus Jakarta Sans">Landing page</text>
+            </g>
+
+            <g class="thread-drop" id="thread-drop-group">
+              <path d="M875 290 C915 350, 930 390, 900 470" fill="none" stroke="#fde68a" stroke-width="5" stroke-dasharray="7 10" />
+              <circle cx="900" cy="470" r="18" fill="#fef3c7" opacity="0.7" />
+              <text x="915" y="525" fill="#fde68a" font-size="18" font-family="Plus Jakarta Sans">thread dropped</text>
+            </g>
+          </svg>
+        </div>
+        <div class="control-bar">
+          <button class="btn btn-warm" id="brain-chaos-button" type="button">Trigger another thought jump</button>
+          <span class="pill-note" id="brain-note">Current state: three live thoughts, one dropped thread, two half-finished tasks.</span>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2>Interest Drives the Engine</h2>
+        <p>
+          This system is not deficit-based. It is attention allocating itself around urgency, novelty, fear, delight,
+          and friction. The problem is not brilliance. The problem is missing scaffolding.
+        </p>
+      </section>
+
+      <section class="closing">
+        This brain is brilliant. It just doesn&apos;t come with a project manager.
+      </section>
+    </main>
+    <script src="interactions.js"></script>
+  </body>
+  </html>

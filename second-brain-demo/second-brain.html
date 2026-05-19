@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This Is Your Second Brain</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-second">
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>Second Brain Demo</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="brain.html">My Brain</a></li>
+          <li><a href="normal-brain.html">Normal Brain</a></li>
+          <li><a class="is-active" href="second-brain.html">Second Brain</a></li>
+          <li><a href="harvest.html">HARVEST</a></li>
+          <li><a href="connections.html">Connections</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">Page 3</p>
+        <h1>This Is Your Second Brain</h1>
+        <p class="hero-lede">
+          Same warm, fast, nonlinear mind. New infrastructure. When the thread drops, something outside your skull catches it,
+          routes it, remembers it, and brings it back.
+        </p>
+        <div class="model-row" aria-label="Model agnostic systems">
+          <span class="model-chip">GLM 5.1 reads the same memory</span>
+          <span class="model-chip">GPT-5.4 gets instant context</span>
+          <span class="model-chip">Claude Opus inherits the wiki</span>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2>Bridge the Drop</h2>
+        <p>
+          MEMORY.md holds the thread. Agents follow up. The diary records what actually happened. The wiki connects it all.
+          The system is model-agnostic because the context layer is what matters.
+        </p>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 1180 660" role="img" aria-labelledby="second-diagram-title">
+            <title id="second-diagram-title">Dropped thought being caught by a second brain system</title>
+            <defs>
+              <linearGradient id="bridgeMix" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f97316" />
+                <stop offset="50%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#a78bfa" />
+              </linearGradient>
+            </defs>
+            <circle cx="255" cy="310" r="150" fill="rgba(249,115,22,0.12)" stroke="#fb923c" stroke-width="2" />
+            <path d="M150 320 C220 170, 310 220, 340 300 S430 450, 490 350" fill="none" stroke="#f97316" stroke-width="9" opacity="0.7" />
+            <path d="M160 260 C210 390, 300 370, 365 255" fill="none" stroke="#fbbf24" stroke-width="6" opacity="0.55" />
+            <text x="255" y="210" text-anchor="middle" fill="#fed7aa" font-size="26" font-family="Plus Jakarta Sans">ADHD brain</text>
+            <text x="255" y="240" text-anchor="middle" fill="#fdba74" font-size="18" font-family="Plus Jakarta Sans">same energy, same originality</text>
+
+            <path class="bridge-line" id="bridge-path" d="M455 335 C540 335, 590 335, 670 335" fill="none" stroke="url(#bridgeMix)" stroke-width="8" />
+            <circle id="bridge-signal" cx="452" cy="335" r="14" fill="#fde68a" />
+            <circle class="catch-glow" id="bridge-catch" cx="700" cy="335" r="18" fill="#7dd3fc" opacity="0.8" />
+
+            <rect x="720" y="170" width="320" height="320" rx="30" fill="rgba(15,23,42,0.8)" stroke="rgba(125,211,252,0.35)" />
+            <text x="880" y="215" text-anchor="middle" fill="#e0f2fe" font-size="30" font-family="Plus Jakarta Sans">Second Brain</text>
+
+            <rect x="760" y="255" width="115" height="80" rx="18" fill="rgba(14,165,233,0.18)" stroke="#38bdf8" />
+            <text x="818" y="292" text-anchor="middle" fill="#e0f2fe" font-size="20" font-family="Plus Jakarta Sans">MEMORY.md</text>
+            <text x="818" y="317" text-anchor="middle" fill="#bae6fd" font-size="14" font-family="Plus Jakarta Sans">catches drops</text>
+
+            <rect x="888" y="255" width="115" height="80" rx="18" fill="rgba(139,92,246,0.18)" stroke="#a78bfa" />
+            <text x="946" y="292" text-anchor="middle" fill="#ede9fe" font-size="20" font-family="Plus Jakarta Sans">Agents</text>
+            <text x="946" y="317" text-anchor="middle" fill="#ddd6fe" font-size="14" font-family="Plus Jakarta Sans">follow up</text>
+
+            <rect x="760" y="355" width="115" height="80" rx="18" fill="rgba(34,197,94,0.16)" stroke="#4ade80" />
+            <text x="818" y="392" text-anchor="middle" fill="#dcfce7" font-size="20" font-family="Plus Jakarta Sans">Diary</text>
+            <text x="818" y="417" text-anchor="middle" fill="#bbf7d0" font-size="14" font-family="Plus Jakarta Sans">records reality</text>
+
+            <rect x="888" y="355" width="115" height="80" rx="18" fill="rgba(56,189,248,0.14)" stroke="#7dd3fc" />
+            <text x="946" y="392" text-anchor="middle" fill="#e0f2fe" font-size="20" font-family="Plus Jakarta Sans">Wiki</text>
+            <text x="946" y="417" text-anchor="middle" fill="#bae6fd" font-size="14" font-family="Plus Jakarta Sans">connects patterns</text>
+
+            <path d="M878 295 H888 M878 395 H888 M818 335 V355 M946 335 V355" stroke="#94a3b8" stroke-width="3" opacity="0.8" />
+            <text id="bridge-caption" x="590" y="305" text-anchor="middle" fill="#fef3c7" font-size="20" font-family="Plus Jakarta Sans">Dropped thought detected</text>
+          </svg>
+        </div>
+        <div class="control-bar">
+          <button class="btn btn-bridge" id="second-bridge-button" type="button">Run the bridging animation</button>
+          <span class="pill-note" id="second-note">Current state: the system is waiting for the next dropped thread.</span>
+        </div>
+      </section>
+
+      <section class="closing">
+        Your brain doesn&apos;t need fixing. It needs infrastructure.
+      </section>
+    </main>
+    <script src="interactions.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Setup Walkthrough | EJ's Palace Wiki</title>
+    <link rel="stylesheet" href="setup-guide.css" />
+    <script src="setup-guide.js" defer></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Setup guide">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-copy"><strong>EJ's Palace Wiki</strong><span>Second Brain Setup Guide</span></span>
+          </a>
+          <div class="nav-links">
+            <a href="../index.html">Back to Demo</a>
+            <a href="index.html">Guide Home</a>
+            <a class="is-active" href="full-setup.html">Full Setup</a>
+            <a href="step-1-mempalace.html">Step Pages</a>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero hero-compact">
+          <p class="eyebrow">Install Everything</p>
+          <h1>Full System Walkthrough</h1>
+          <p>
+            Open each section as you go. The progress meter updates as the stack unfolds, from raw memory storage to
+            the HARVEST loop that turns yesterday's sessions into tomorrow's context.
+          </p>
+        </section>
+
+        <section class="section">
+          <div class="resource-box">
+            <p class="section-kicker">Prerequisites</p>
+            <h2>Start with OpenClaw</h2>
+            <p>OpenClaw is the platform layer that runs the agent sessions, automation, and cron jobs this stack depends on.</p>
+            <div class="resource-actions">
+              <a class="button" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">Get OpenClaw →</a>
+            </div>
+            <div class="resource-links">
+              <a class="resource-link" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">GitHub: openclaw/openclaw</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Resources</p>
+              <h2>Everything you need before you scroll</h2>
+            </div>
+            <p>Open the exact package, reference, or platform link for each layer before you work through the full walkthrough.</p>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-card">
+              <p class="section-kicker">1. MemPalace</p>
+              <h3>Get MemPalace →</h3>
+              <p>Install it first, then point it at your notes, transcripts, and project folders.</p>
+              <div class="resource-actions">
+                <a class="button" href="https://github.com/ekelloharrid/mempalace" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="ghost-button" href="https://www.npmjs.com/package/mempalace" target="_blank" rel="noreferrer">npm</a>
+              </div>
+            </article>
+            <article class="resource-card">
+              <p class="section-kicker">2. LLM Wiki Pattern</p>
+              <h3>Read the Pattern →</h3>
+              <p>Use the original write-up as the concept anchor, then express the structure inside your own <code>WIKI.md</code>.</p>
+              <div class="resource-actions">
+                <a class="button" href="https://karpathy.github.io/2020/04/11/hobby-ml/" target="_blank" rel="noreferrer">Original post</a>
+              </div>
+            </article>
+            <article class="resource-card">
+              <p class="section-kicker">3. EJ's Palace Wiki</p>
+              <h3>Browse EJ's GitHub Org →</h3>
+              <p>Reference EJ's public org while you build the wiki-centered variation of the pattern.</p>
+              <div class="resource-actions">
+                <a class="button" href="https://github.com/FuFicFac" target="_blank" rel="noreferrer">Open FuFicFac</a>
+              </div>
+            </article>
+            <article class="resource-card">
+              <p class="section-kicker">4. SOUL.md + MEMORY.md</p>
+              <h3>Create the Context Files →</h3>
+              <p>Create these files yourself, using existing agent context repos as the reference pattern.</p>
+              <div class="resource-actions">
+                <a class="button" href="https://github.com/anthropics/claude-code" target="_blank" rel="noreferrer">Claude Code context</a>
+                <a class="ghost-button" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">OpenClaw docs</a>
+              </div>
+            </article>
+            <article class="resource-card">
+              <p class="section-kicker">5. HARVEST</p>
+              <h3>Run HARVEST on OpenClaw →</h3>
+              <p>Use OpenClaw to run the scheduled learning loop that keeps the system compounding.</p>
+              <div class="resource-actions">
+                <a class="button" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">OpenClaw</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section progress-layout">
+          <aside class="progress-card">
+            <p class="section-kicker">Progress</p>
+            <h2>Where you are</h2>
+            <div class="progress-bar"><span data-progress-bar></span></div>
+            <p><strong data-progress-value>0%</strong> opened</p>
+            <p><span data-progress-count>0 / 5</span> sections expanded</p>
+            <ul class="progress-list">
+              <li data-progress-label>MemPalace</li>
+              <li data-progress-label>LLM Wiki Pattern</li>
+              <li data-progress-label>EJ's Palace Wiki</li>
+              <li data-progress-label>SOUL.md + MEMORY.md</li>
+              <li data-progress-label>HARVEST</li>
+            </ul>
+          </aside>
+
+          <div class="full-stack">
+            <details class="accordion" data-progress-item>
+              <summary><div class="accordion-label"><span><h3>1. MemPalace</h3><p>Install durable semantic memory before anything else.</p></span><small>Expand</small></div></summary>
+              <div class="accordion-copy">
+                <p>
+                  MemPalace is the raw memory substrate. It stores source material, session logs, notes, and transcripts
+                  as searchable vector-indexed drawers so an agent can retrieve prior context instead of rebuilding the
+                  world every time you open a terminal.
+                </p>
+                <pre><code>npm install -g mempalace
+
+# create mempalace.yaml and point it at your source directories
+mempalace ingest ./Inbox
+mempalace query "What did we learn from yesterday's session?"</code></pre>
+                <p>The headline reason this matters is continuity. EJ's production memory has 43,000+ drawers, which means the agent starts from accumulated reality, not a blank whiteboard.</p>
+              </div>
+            </details>
+
+            <details class="accordion" data-progress-item>
+              <summary><div class="accordion-label"><span><h3>2. Karpathy's LLM Wiki Pattern</h3><p>Curate the important 5% into pages the model can maintain.</p></span><small>Expand</small></div></summary>
+              <div class="accordion-copy">
+                <p>
+                  The wiki pattern keeps the raw archive from becoming a swamp. Most information stays raw; the best 5%
+                  gets promoted into a living wiki through four operations: INGEST for new material, QUERY for retrieval,
+                  HARVEST for missed facts, and LINT for structural health checks.
+                </p>
+                <pre><code>INGEST  -> process notes and sources into candidate knowledge
+QUERY   -> search the wiki and answer from curated context
+HARVEST -> pull durable facts out of real work sessions
+LINT    -> find broken links, stale pages, and schema drift</code></pre>
+                <p>That is what makes the system alive. A static wiki decays. An operated wiki keeps being re-shaped by use.</p>
+              </div>
+            </details>
+
+            <details class="accordion" data-progress-item>
+              <summary><div class="accordion-label"><span><h3>3. EJ's Palace Wiki</h3><p>Bridge MemPalace and the curated wiki into one operating system.</p></span><small>Expand</small></div></summary>
+              <div class="accordion-copy">
+                <p>
+                  EJ's variation adds HARVEST directly into the wiki workflow. MemPalace catches what live sessions produced,
+                  HARVEST turns the durable parts into candidates, and the wiki absorbs the results so future agents inherit
+                  them by default.
+                </p>
+                <pre><code>WIKI.md      -> schema, voice, and editorial rules
+index.md     -> catalog of important pages
+log.md       -> operational log of what changed
+Wiki/        -> Projects, People, Concepts, Infrastructure
+Inbox/       -> drop zone for unsorted material</code></pre>
+                <p>Without HARVEST, sessions are islands. With it, sessions become source material for the next round of thinking.</p>
+              </div>
+            </details>
+
+            <details class="accordion" data-progress-item>
+              <summary><div class="accordion-label"><span><h3>4. SOUL.md + MEMORY.md</h3><p>Give any model a stable identity and a working sense of the room.</p></span><small>Expand</small></div></summary>
+              <div class="accordion-copy">
+                <p>
+                  These files are the agent's onboarding packet. <code>SOUL.md</code> defines personality, values, voice,
+                  and guardrails. <code>MEMORY.md</code> captures standing facts, active context, and operational rules.
+                  Any capable model can read them, whether that is GLM 5.1, GPT-5.4, or Claude Opus.
+                </p>
+                <pre><code>SOUL.md
+- who the agent is
+- how it should sound
+- what it protects
+
+MEMORY.md
+- standing context
+- ongoing projects
+- facts worth keeping between sessions</code></pre>
+                <p>This is the move that makes the agent model-agnostic instead of provider-locked.</p>
+              </div>
+            </details>
+
+            <details class="accordion" data-progress-item>
+              <summary><div class="accordion-label"><span><h3>5. HARVEST Deep Dive</h3><p>Automate the learning loop while you sleep.</p></span><small>Expand</small></div></summary>
+              <div class="accordion-copy">
+                <p>
+                  HARVEST runs on a schedule, mines agent sessions, scores candidate facts, then routes them by confidence:
+                  above 0.85 gets auto-promoted, 0.5 to 0.85 becomes a review candidate, and anything lower gets discarded.
+                </p>
+                <pre><code>Work
+  -> Harvest
+    -> Wiki
+      -> Context
+        -> Better Work
+          -> Harvest again</code></pre>
+                <p>That is the difference between a file cabinet and a living system. The loop keeps folding real work back into usable context.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="section section-panel">
+          <p class="section-kicker">You're Done</p>
+          <h2>The stack is ready to compound</h2>
+          <div class="done-grid">
+            <div class="done-card">
+              <strong>Next step: ingest reality</strong>
+              <p>Point MemPalace and the wiki inbox at your real notes, transcripts, bookmarks, and active project folders.</p>
+            </div>
+            <div class="done-card">
+              <strong>Next step: schedule HARVEST</strong>
+              <p>Run the first loop on recent sessions so the system demonstrates improvement immediately instead of waiting weeks.</p>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="step-1-mempalace.html">Walk it step by step</a>
+            <a class="ghost-button" href="index.html">Back to guide home</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  </html>
